@@ -86,7 +86,36 @@ nij <- function(proj, theta, j) {
   
 
 
+#' Maximizes Q function for pixel j to estimate theta j
+#'
+#' @param theta_j theta for pixel j to optimize for
+#' @param proj_list list of projections
+#' @param theta matrix of estimated theta values
+#' @param j pixel of interest
+#' @return nij
+#' @export
+q_fun_j <- function(thetaj, proj_list, theta, j) {
+  
+  num_proj <- length(proj_list)
+  
+  val <- 0
+  
+  for (i in 1:num_proj) {
+    
+    m_exp <- mij(proj_list[[i]], theta, j)
+    
+    n_exp <- nij(proj_list[[i]], theta, j)
+    
+    val <- val - n_exp + (m_exp - n_exp) / (exp(thetaj) - 1)
+    
+  }
+  
+  return(val)
+  
+}
+  
+  
 
-  
-  
+uniroot(q_fun_j, interval = c(0, 10), 2, theta)
+
   
