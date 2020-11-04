@@ -92,7 +92,7 @@ nij <- function(proj, theta, j) {
 #' @param proj_list list of projections
 #' @param theta matrix of estimated theta values
 #' @param j pixel of interest
-#' @return nij
+#' @return q function value for theta j
 #' @export
 q_fun_j <- function(thetaj, proj_list, theta, j) {
   
@@ -116,6 +116,45 @@ q_fun_j <- function(thetaj, proj_list, theta, j) {
   
   
 
-uniroot(q_fun_j, interval = c(0, 10), 2, theta)
+#' EM algorithm for transmission tomography
+#'
+#' @param proj_list list of projections
+#' @param theta matrix of initial theta values
+#' @param tol tolerance used for the stopping rule
+#' @return estimated theta values
+#' @export
+em_alg <- function(proj_list, theta, tol) {
+  
+  theta_est <- matrix(NA, nrow = nrow(theta), ncol = ncol(theta))
+  
+  num_pixel <- nrow(theta) * ncol(theta)
+  
+  ctr <- 0
+  
+  diff <- Inf
+  
+  while (diff > tol & ctr <= 1000) {
+    
+    for (j in 1:num_pixel) {
+      
+      theta_est[j] <- uniroot(q_fun_j, interval = c(0.0001, 10), proj_list, theta, 2)$root # what are the bounds of theta? 
+      
+    }
+    
+    diff <- sum((theta_est - theta)^2)
+    
+    theta <- theta_est
+    
+    ctr <- ctr + 1
+    
+  }
+  
+  return(theta_est)
+  
+}
+
+
+
+
 
   
