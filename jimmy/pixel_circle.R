@@ -1,7 +1,7 @@
 library("plot.matrix")
 
 radius = 5
-center = (2 * radius + 1) / 2
+center = (2 * radius + 1 + 1) / 2
 nrow =  2 * radius + 1
 ncol =  2 * radius + 1
 
