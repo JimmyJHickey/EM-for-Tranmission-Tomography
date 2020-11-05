@@ -3,7 +3,7 @@
 
 set.seed(740)
 
-theta <- matrix(runif(4, 0, 1), nrow = 2)
+theta <- matrix(runif(4, 0, 5), nrow = 2)
 
 dat <- data_gen_df(theta, d = 100000, ROW = 1:2, COL = 1:2)
 
@@ -34,7 +34,7 @@ em_alg(proj_list, theta_init, .00001)
 
 set.seed(708)
 
-theta <- matrix(runif(9, 0, 1), nrow = 3)
+theta <- matrix(runif(9, 0, 5), nrow = 3)
 
 dat <- data_gen_df(theta, d = 100000, ROW = 1:3, COL = 1:3)
 
@@ -69,7 +69,7 @@ em_alg(proj_list, theta_init, .00001)
 
 set.seed(708)
 
-theta <- matrix(runif(9, 0, 1), nrow = 3)
+theta <- matrix(runif(9, 0, 5), nrow = 3)
 
 dat <- data_gen_df(theta, d = 100000, ROW = 1:3, COL = 1:3)
 
@@ -106,7 +106,7 @@ proj_list <- list(proj1, proj2, proj3, proj4, proj5, proj6,
 
 
 
-theta_init <- matrix(runif(9, 0, 1), nrow = 3)
+theta_init <- matrix(runif(9, 0, 5), nrow = 3)
 
 
 
