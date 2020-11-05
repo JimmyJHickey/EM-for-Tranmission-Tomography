@@ -34,7 +34,7 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
   #d: Poisson mean for initial Poisson generation
   #ROW: rows which we project on (vector) Enter negative row number to get opposite direction
   #COL: columns which we project on (vector) Enter negative col number to get opposite direction
-  #erps: number of times to run the function
+  #reps: number of times to run the function
   
   r = dim(THETA)[1] #Number of rows in THETA
   c = dim(THETA)[2] #Number of cols in THETA
@@ -46,7 +46,9 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
   
   #Return length(ROW)+length(COL) list
   #with d, indices (in order) beam went through, counts
-  proj.list <- list()
+  proj.list <- vector("list", (length(ROW) + length(COL)) * reps)
+  
+  pl_idx <- 1
   
   for(a in 1:reps){
     
@@ -63,10 +65,9 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
         idx = seq(-rr, -rr+(c-1)*r, r)
         idx = rev(idx[which(THETA[-rr,]>=0, arr.ind=TRUE)])
       }
-    
-    
-      add.list <- list(d, idx, y)
-      proj.list <- append(proj.list, add.list)
+      add.list <- list(d = d, idx = idx, y = y)
+      proj.list[[pl_idx]] <- add.list
+      pl_idx <- pl_idx + 1
     }
   
     #Run over COLS second
@@ -80,8 +81,9 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
         idx = seq((-cc-1)*r+1, -cc*r, 1)
         idx = rev(idx[which(THETA[,-cc]>=0, arr.ind=TRUE)])
       }
-      add.list <- list(d, idx, y)
-      proj.list <- append(proj.list, add.list)
+      add.list <- list(d = d, idx = idx, y = y)
+      proj.list[[pl_idx]] <- add.list
+      pl_idx <- pl_idx + 1
     }
   }
   
