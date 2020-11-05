@@ -133,7 +133,7 @@ em_alg <- function(proj_list, theta, tol) {
   
   diff <- Inf
   
-  while (diff > tol & ctr <= 1000) {
+  while (diff > tol & ctr <= 100000) {
     
     for (j in 1:num_pixel) {
       
