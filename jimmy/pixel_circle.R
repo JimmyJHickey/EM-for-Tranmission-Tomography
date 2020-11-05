@@ -1,7 +1,7 @@
 in_circle = function(radius){
   
   # radius of scan 
-  # approximately 2% bigger than the radius of the patient cross section
+  # approximately 5% bigger than the radius of the patient cross section
   out_radius = as.integer(radius * 1.05 +1)
   
   center = (2 * out_radius + 1 + 1) %/% 2
