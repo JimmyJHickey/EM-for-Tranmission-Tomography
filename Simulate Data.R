@@ -10,6 +10,10 @@ data_gen <- function(theta, d){
   
   p = length(theta)
   
+  if(p<=0){#If empty theta vector is given, return # of emitted photons
+    return(d)
+  }
+  
   X1 = rpois(1, lambda = d) #Initial number of counts from Poisson dist.
   
   X = c(X1, rep(0, p)) #Vector to hold the number of counts after each interaction
@@ -49,13 +53,15 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
     #Run over ROWS first
     for(rr in ROW){
       if(rr > 0){
-        y <- data_gen(THETA[rr,], d)
+        y <- data_gen(THETA[rr,THETA[rr,]>=0], d)
         #Matrix indices that this beam goes through
         idx = seq(rr, rr+(c-1)*r, r)
+        idx = idx[which(THETA[rr,]>=0, arr.ind=TRUE)] #Drop indices with negative thetas
       }else{ #switch order of theta if row number is negative
-        y <- data_gen(rev(THETA[-(rr),]), d)
+        y <- data_gen(rev(THETA[-(rr),THETA[-(rr),]>=0]), d)
         #Matrix indices that this beam goes through
-        idx = rev(seq(-rr, -rr+(c-1)*r, r))
+        idx = seq(-rr, -rr+(c-1)*r, r)
+        idx = rev(idx[which(THETA[-rr,]>=0, arr.ind=TRUE)])
       }
     
     
@@ -66,11 +72,13 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
     #Run over COLS second
     for(cc in COL){
       if(cc >0){
-        y<- data_gen(THETA[,cc], d)
+        y<- data_gen(THETA[THETA[,cc]>=0,cc], d)
         idx = seq((cc-1)*r+1, cc*r, 1)
+        idx = idx[which(THETA[,cc]>=0, arr.ind = TRUE)] # Drop indices with negative thetas
       }else{
-        y <- data_gen(rev(THETA[,-(cc)]), d)
-        idx = rev(seq((-cc-1)*r+1, -cc*r, 1))
+        y <- data_gen(rev(THETA[THETA[,-(cc)]>=0,-(cc)]), d)
+        idx = seq((-cc-1)*r+1, -cc*r, 1)
+        idx = rev(idx[which(THETA[,-cc]>=0, arr.ind=TRUE)])
       }
       add.list <- list(d, idx, y)
       proj.list <- append(proj.list, add.list)
