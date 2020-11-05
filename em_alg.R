@@ -151,7 +151,7 @@ em_alg <- function(proj_list, theta, tol) {
     
   }
   
-  return(theta_est)
+  return(list(theta_est = theta_est, ctr = ctr))
   
 }
 
