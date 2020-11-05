@@ -119,15 +119,15 @@ q_fun_j <- function(thetaj, proj_list, theta, j) {
 #' EM algorithm for transmission tomography
 #'
 #' @param proj_list list of projections
-#' @param theta matrix of initial theta values
+#' @param theta vector of initial theta values
 #' @param tol tolerance used for the stopping rule
 #' @return estimated theta values
 #' @export
 em_alg <- function(proj_list, theta, tol) {
   
-  theta_est <- matrix(NA, nrow = nrow(theta), ncol = ncol(theta))
+  theta_est <- rep(NA, length(theta))
   
-  num_pixel <- nrow(theta) * ncol(theta)
+  num_pixel <- length(theta)
   
   ctr <- 0
   
