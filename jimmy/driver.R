@@ -1,5 +1,3 @@
-require("plot.matrix")
-
 radius = 30
 
 in_circ = in_circle(radius)
