@@ -24,7 +24,7 @@ data_gen <- function(theta, d){
   return(Y)
 }
 
-#Function which generates the obersrved data for entire theta matrix and arbitrary projections
+#Function which generates the observed data for entire theta matrix and arbitrary projections
 data_gen_df <- function(THETA, d, ROW, COL){
   #THETA: inputed theta matrix used to compute probs.
   #d: Poisson mean for initial Poisson generation
