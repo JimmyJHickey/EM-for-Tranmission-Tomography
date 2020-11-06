@@ -61,7 +61,7 @@ plot_matrix(em_r5_circle$theta_est)
 
 abs_diff_mat <- abs(em_r5_circle$theta_est - circle_theta)
 
-sq_diff_mat <- abs_diff_mat^2
+sq_diff_mat <- sqrt(abs_diff_mat^2)
 
 plot_matrix(abs_diff_mat)
 
@@ -70,6 +70,9 @@ plot_matrix(sq_diff_mat)
 # MSE:
 
 mean(sq_diff_mat) # 0.2428365
+
+# By the way, I tested and saw that the EM algorithm, the way I've implemented it, is deterministic. I.e. 
+# it returns the same results given the exact same proj_list and theta_init.
 
 
 
@@ -117,7 +120,7 @@ plot_matrix(em_r5_circle_reps2$theta_est)
 
 abs_diff_mat <- abs(em_r5_circle_reps2$theta_est - circle_theta)
 
-sq_diff_mat <- abs_diff_mat^2
+sq_diff_mat <- sqrt(abs_diff_mat^2)
 
 plot_matrix(abs_diff_mat)
 
@@ -192,7 +195,7 @@ plot_matrix(em_r10_circle$theta_est)
 
 abs_diff_mat <- abs(em_r10_circle$theta_est - circle_theta)
 
-sq_diff_mat <- abs_diff_mat^2
+sq_diff_mat <- sqrt(abs_diff_mat^2)
 
 plot_matrix(abs_diff_mat)
 
@@ -265,7 +268,7 @@ plot_matrix(em_r10_circle_reps10$theta_est)
 
 abs_diff_mat <- abs(em_r10_circle_reps10$theta_est - circle_theta)
 
-sq_diff_mat <- abs_diff_mat^2
+sq_diff_mat <- sqrt(abs_diff_mat^2)
 
 plot_matrix(abs_diff_mat)
 
@@ -338,7 +341,7 @@ plot_matrix(em_r10_circle_reps5$theta_est)
 
 abs_diff_mat <- abs(em_r10_circle_reps5$theta_est - circle_theta)
 
-sq_diff_mat <- abs_diff_mat^2
+sq_diff_mat <- sqrt(abs_diff_mat^2)
 
 plot_matrix(abs_diff_mat)
 
