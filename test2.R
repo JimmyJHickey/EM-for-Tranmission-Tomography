@@ -49,4 +49,4 @@ theta_init <- circle_theta
 
 theta_init[which(circle_theta >= 0)] <- runif(num_pixel, 0, 0.1)
 
-em_alg(proj_list, theta_init, .001)
+results1 <- em_alg(proj_list, theta_init, .001)
