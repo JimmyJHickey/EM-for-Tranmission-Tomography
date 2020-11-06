@@ -195,7 +195,7 @@ plot_matrix(em_r10_circle$theta_est)
 
 abs_diff_mat <- abs(em_r10_circle$theta_est - circle_theta)
 
-sq_diff_mat <- sqrt(abs_diff_mat^2)
+sq_diff_mat <- abs_diff_mat^2
 
 plot_matrix(abs_diff_mat)
 
@@ -203,8 +203,11 @@ plot_matrix(sq_diff_mat)
 
 # MSE:
 
-mean(sq_diff_mat) # 0.1326812
+sqrt(sum(sq_diff_mat)) / num_pixel # 0.1326812
+# 0.08058724
 
+svd(em_r10_circle$theta_est - circle_theta)$d[1]
+# 6.419622
 
 
 
@@ -341,7 +344,7 @@ plot_matrix(em_r10_circle_reps5$theta_est)
 
 abs_diff_mat <- abs(em_r10_circle_reps5$theta_est - circle_theta)
 
-sq_diff_mat <- sqrt(abs_diff_mat^2)
+sq_diff_mat <- abs_diff_mat^2
 
 plot_matrix(abs_diff_mat)
 
@@ -349,4 +352,12 @@ plot_matrix(sq_diff_mat)
 
 # MSE:
 
-mean(sq_diff_mat) # 0.167909
+sqrt(sum(sq_diff_mat)) / num_pixel # 0.167909
+# 0.09065642
+
+
+svd(em_r10_circle_reps5$theta_est - circle_theta)$d[1]
+# 6.958846e+00
+
+
+
