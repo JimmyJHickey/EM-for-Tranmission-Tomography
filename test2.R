@@ -253,7 +253,7 @@ theta_init <- circle_theta
 
 theta_init[which(circle_theta >= 0)] <- runif(num_pixel, 0, 0.1)
 
-system.time(em_r10_circle_reps10 <- em_alg(proj_list, theta_init, .0001)) 
+system.time(em_r10_circle_reps10 <- em_alg(proj_list, theta_init, .0001)) # 136.7684 minutes
 
 save(em_r10_circle_reps10, file = "em_results/em_r10_circle_reps10.RData")
 
@@ -269,7 +269,7 @@ plot_matrix(sq_diff_mat)
 
 # MSE:
 
-mean(sq_diff_mat) 
+mean(sq_diff_mat) # 0.1909737
 
 
 
