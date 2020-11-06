@@ -3,7 +3,7 @@
 #' Calculates mij for the E step
 #'
 #' @param proj list of information for this projection
-#' @param theta vector of initial theta values
+#' @param theta matrix of initial theta values
 #' @param j pixel of interest
 #' @return mij
 #' @export
@@ -50,7 +50,7 @@ mij <- function(proj, theta, j) {
 #' Calculates nij for the E step
 #'
 #' @param proj list of information for this projection
-#' @param theta vector of initial theta values
+#' @param theta matrix of initial theta values
 #' @param j pixel of interest
 #' @return nij
 #' @export
@@ -92,7 +92,7 @@ nij <- function(proj, theta, j) {
 #'
 #' @param theta_j theta for pixel j to optimize for
 #' @param proj_list list of projections
-#' @param theta vector of initial theta values
+#' @param theta matrix of initial theta values
 #' @param j pixel of interest
 #' @return q function value for theta j
 #' @export
@@ -116,20 +116,52 @@ q_fun_j <- function(thetaj, proj_list, theta, j) {
   
 }
   
+
+
+#' Detects whether there are any projections with y = 0 in proj_list
+#'
+#' @param proj_list list of projections
+#' @return TRUE/FALSE depending if a zero was detected or not
+#' @export
+y_zero <- function(proj_list) {
   
+  has_zero <- FALSE   
+  
+  for (proj in proj_list) {
+    
+    if (proj$y == 0) {
+      has_zero <- TRUE
+    }
+    
+  }
+  
+  return(has_zero)
+  
+}
+
+
+
 
 #' EM algorithm for transmission tomography
 #'
 #' @param proj_list list of projections
-#' @param theta vector of initial theta values
+#' @param theta matrix of initial theta values. Assumes the -1's in the matrix refer to dead space to 
+#' be ignored
 #' @param tol tolerance used for the stopping rule
 #' @return estimated theta values
 #' @export
 em_alg <- function(proj_list, theta, tol) {
   
-  theta_est <- rep(NA, length(theta))
+  if(y_zero(proj_list)){
+    return(simpleError("There's a projection with zero photons observed."))
+  }
   
-  num_pixel <- length(theta)
+  theta_est <- matrix(-1, nrow = nrow(theta), ncol = ncol(theta))
+  
+  num_pixel <- sum(theta >= 0)
+  
+  # indices of theta_est that are nonnegative
+  nonneg_idx <- which(circle_theta >= 0)
   
   ctr <- 0
   
@@ -137,11 +169,11 @@ em_alg <- function(proj_list, theta, tol) {
   
   while (diff > tol & ctr <= 100000) {
     
-    for (j in 1:num_pixel) {
+    for (j in nonneg_idx) {
       
       # what are the bounds of theta?
       # if I need more efficiency, calculate nij and mij outside of function
-      theta_est[j] <- uniroot(q_fun_j, interval = c(0, 10), proj_list, theta, j)$root  
+      theta_est[j] <- uniroot(q_fun_j, interval = c(0.0000001, 10), proj_list, theta, j)$root  
       
     }
     
@@ -156,6 +188,7 @@ em_alg <- function(proj_list, theta, tol) {
   return(list(theta_est = theta_est, ctr = ctr))
   
 }
+
 
 
 
