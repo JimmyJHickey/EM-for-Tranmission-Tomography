@@ -184,6 +184,8 @@ theta_init[which(circle_theta >= 0)] <- runif(num_pixel, 0, 0.1)
 
 system.time(em_r10_circle <- em_alg(proj_list, theta_init, .0001)) # 16.39692 minutes
 
+em_r10_circle$ctr # 286 iterations
+
 save(em_r10_circle, file = "em_results/em_r10_circle.RData")
 
 plot_matrix(em_r10_circle$theta_est)
@@ -255,6 +257,8 @@ theta_init[which(circle_theta >= 0)] <- runif(num_pixel, 0, 0.1)
 
 system.time(em_r10_circle_reps10 <- em_alg(proj_list, theta_init, .0001)) # 136.7684 minutes
 
+em_r10_circle_reps10$ctr # 235 iterations
+
 save(em_r10_circle_reps10, file = "em_results/em_r10_circle_reps10.RData")
 
 plot_matrix(em_r10_circle_reps10$theta_est)
@@ -325,6 +329,8 @@ theta_init <- circle_theta
 theta_init[which(circle_theta >= 0)] <- runif(num_pixel, 0, 0.1)
 
 system.time(em_r10_circle_reps5 <- em_alg(proj_list, theta_init, .0001)) # 92.35897 minutes
+
+em_r10_circle_reps5$ctr # 324 iterations
 
 save(em_r10_circle_reps5, file = "em_results/em_r10_circle_reps5.RData")
 
