@@ -2,7 +2,7 @@
 #PLEASE READ 
 #This is our code to run our MC Experiments
 #Each of us will run this code for a DIFFERENT circle_theta
-#Checkered == Eric; One Cirlce == Alvin; Two Circles == Jimmy
+#Checkered == Eric; One Circle == Alvin; Two Circles == Jimmy
 #Thus, when we are all done, we will have one array each, three arrays total, one per circle_theta
 
 ##--------------------------------------------------------------
@@ -94,8 +94,8 @@ for(radius in radius.seq){
       
       #plot_matrix(sq_diff_mat)
       
-      # MSE:
-      checker_results[a,b,1,N] <- sqrt(sum(sq_diff_mat)) / num_pixel 
+      # RMSE:
+      checker_results[a,b,1,N] <- sqrt(sum(sq_diff_mat) / num_pixel) 
       #Spectral Norm
       checker_results[a,b,2,N] <-svd(em_r10_circle_reps5$theta_est - circle_theta)$d[1]
       #Number of iterations
