@@ -23,7 +23,7 @@ set.seed(27605) # set the seed
 #Set the names for the array
 names.radius = c("rad3", "rad5", "rad10")
 names.reps = c("reps1", "reps2", "reps3", "reps4", "reps5")
-names.met = c("MSE", "Spectral", "Iterations")
+names.met = c("RMSE", "Spectral", "Iterations")
 names.N = c("N1", "N2", "N3", "N4", "N5", "N6", "N7", "N8", "N9", "N10")
 
 names.list = list(names.radius, names.reps, names.met, names.N)
@@ -35,7 +35,7 @@ checker_results <- array(NaN, dim =  c(3,5,3,10), dimnames = names.list)
 #Output is a mulit-dimensional array
 #Dim 1: Radius. Length=3 for radius=c(3,5,10)
 #Dim 2: Reps. Length=5 for reps=1:5
-#Dim 3: Metrics. Length=3 for metric = c('MSE', 'Spectral', 'Iterations')
+#Dim 3: Metrics. Length=3 for metric = c('RMSE', 'Spectral', 'Iterations')
 #Dim 4: Monte Carlo N. length=N=10
 #Thus, we willl have an 3x5x3x10 array (=450 data points)
 
@@ -58,6 +58,7 @@ for(radius in radius.seq){
       # generating observations
       set.seed(as.numeric(ceiling(proc.time()[3])))
       # vector of boundary rows/columns that aren't solely negative space
+      # this code will not be right if there's more than one layer of -1's
       bounds <- 2:(nrow(circle_theta) - 1)
       
       #Generate data
@@ -82,11 +83,11 @@ for(radius in radius.seq){
       circle_theta_init[which(circle_theta >= 0)] <- runif(num_pixel, 0, 0.1)
       
       #Run Algorithm
-      em_r10_circle_reps5 <- em_alg(proj_list, circle_theta_init, .0001) 
+      em_res <- em_alg(proj_list, circle_theta_init, .0001) 
       
 
       
-      abs_diff_mat <- abs(em_r10_circle_reps5$theta_est - circle_theta)
+      abs_diff_mat <- abs(em_res$theta_est - circle_theta)
     
       sq_diff_mat <- abs_diff_mat^2
       
@@ -97,9 +98,9 @@ for(radius in radius.seq){
       # RMSE:
       checker_results[a,b,1,N] <- sqrt(sum(sq_diff_mat) / num_pixel) 
       #Spectral Norm
-      checker_results[a,b,2,N] <-svd(em_r10_circle_reps5$theta_est - circle_theta)$d[1]
+      checker_results[a,b,2,N] <-svd(em_res$theta_est - circle_theta)$d[1]
       #Number of iterations
-      checker_results[a,b,3,N] <-em_r10_circle_reps5$ctr 
+      checker_results[a,b,3,N] <-em_res$ctr 
     }
     b = b+1  
   }
