@@ -23,3 +23,15 @@ circle_theta1  = circle_pattern(in_circ, 6, 20, 30)
 circle_theta2  = circle_pattern(in_circ, 3, 30, 25)
 plot_matrix(random_theta + circle_theta1 + circle_theta2)
 
+
+
+radius = 3
+
+in_circ = in_circle(radius)
+plot_matrix(in_circ)
+
+# add two circles 
+circle_theta1  = circle_pattern(in_circ, 2, 8, 8)
+circle_theta2  = circle_pattern(circle_theta1, 2, 4, 4)
+plot_matrix(circle_theta2)
+
