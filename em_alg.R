@@ -159,7 +159,7 @@ em_alg <- function(proj_list, theta, tol) {
   theta_est <- matrix(-1, nrow = nrow(theta), ncol = ncol(theta))
   
   # indices of theta_est that are nonnegative
-  nonneg_idx <- which(circle_theta >= 0)
+  nonneg_idx <- which(theta >= 0)
   
   ctr <- 0
   
