@@ -29,6 +29,13 @@ set.seed(1221)
 # this code will not be right if there's more than one layer of -1's
 bounds <- 2:(nrow(circle_theta) - 1)
 
+
+
+
+
+
+source("Simulate Data.R")
+
 #Generate data
 proj_list <- data_gen_df(circle_theta, d = 1000000000, ROW = c(bounds, -bounds), 
                          COL = c(bounds, -bounds),
@@ -67,10 +74,20 @@ plot_matrix(sq_diff_mat)
 
 # MSE:
 
-sqrt(sum(sq_diff_mat)) / num_pixel # 0.167909
-# 0.09065642
+sqrt(sum(sq_diff_mat)) / num_pixel 
+# 0 diag  0.08450741
 
+# 1 diag  0.07840016
 
+# 2 diag  0.06785882
+
+# 4 diag  0.06785882
+
+# 6 diag  0.06616761
+
+# 8 diag  0.06921388
+
+ 
 svd(em_r10_circle_reps5$theta_est - circle_theta)$d[1]
 # 6.958846e+00
 
