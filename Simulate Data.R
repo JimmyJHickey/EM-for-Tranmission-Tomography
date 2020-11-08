@@ -139,6 +139,14 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
   # length that each projection traverses across each pixel
   l <- sqrt(rise^2 + run^2)
   
+  #Return projection list
+  #with d, length of projection within each pixel, indices (in order) beam went through, counts
+  proj.list <- vector("list", 1)
+  
+  pl_idx <- 1
+  
+  
+  
   # 1. Projections with slope (rise/run), starting from left wall
   for(rr in ROW){
     if(rr > 0){
@@ -390,7 +398,7 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
     
   }
   
-  
+  return(proj.list)
   
 }
 
