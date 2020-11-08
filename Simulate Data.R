@@ -35,9 +35,9 @@ data_gen <- function(theta, d, l){
 }
 
 
-#Function which generates the obersrved data for entire theta matrix and arbitrary projections
+#Function which generates the observed data for entire theta matrix and arbitrary projections
 data_gen_df <- function(THETA, d, ROW, COL, reps=1){
-  #THETA: inputed theta matrix used to compute probs.
+  #THETA: input theta matrix used to compute probs.
   #d: Poisson mean for initial Poisson generation
   #ROW: rows which we project on (vector) Enter negative row number to get opposite direction
   #COL: columns which we project on (vector) Enter negative col number to get opposite direction
@@ -51,8 +51,8 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
     return(simpleError("Row and/or column indices out of range."))
   }
   
-  #Return length(ROW)+length(COL) list
-  #with d, indices (in order) beam went through, counts
+  #Return projection list
+  #with d, length of projection within each pixel, indices (in order) beam went through, counts
   proj.list <- vector("list", 1)
   
   pl_idx <- 1
