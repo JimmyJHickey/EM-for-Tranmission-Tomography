@@ -156,22 +156,28 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       }
     }
     else{ # switch order of idx and theta if row number is negative
-      curr_row = rr
-      curr_col = c
+      curr_row = -rr
+      curr_col = 1
       
       #Matrix indices that this beam goes through
-      idx = c(calc_index(r, curr_row, curr_col))
+      idx = c()
       
       # thetas intersected
-      hit_thetas = c(THETA[curr_row, curr_col])
+      hit_thetas = c()
       
+      # while still in bounds of the scan
       while((1 <= curr_row && curr_row <= r) && 
             (1 <= curr_col && curr_col <= c)){
-        curr_row = curr_row + 1
-        curr_col = curr_col - 1
+        
         idx = c(idx, calc_index(r, curr_row, curr_col))
         hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
+        curr_row = curr_row+1
+        curr_col = curr_col+1
+        
       }
+      
+      idx <- rev(idx)
+      hit_thetas <- rev(hit_thetas)
       
     }
     
@@ -211,22 +217,29 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       }
     }
     else{ # switch order of idx and theta if row number is negative
-      curr_row = rr
-      curr_col = c
+      
+      curr_row = -rr
+      curr_col = 1
       
       #Matrix indices that this beam goes through
-      idx = c(calc_index(r, curr_row, curr_col))
+      idx = c()
       
       # thetas intersected
-      hit_thetas = c(THETA[curr_row, curr_col])
+      hit_thetas = c()
       
+      # while still in bounds of the scan
       while((1 <= curr_row && curr_row <= r) && 
             (1 <= curr_col && curr_col <= c)){
-        curr_row = curr_row - 1
-        curr_col = curr_col - 1
+        
         idx = c(idx, calc_index(r, curr_row, curr_col))
-        hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
+        hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])    
+        curr_row = curr_row - 1
+        curr_col = curr_col + 1
+        
       }
+      
+      idx <- rev(idx)
+      hit_thetas <- rev(hit_thetas)
       
     }
     
@@ -266,22 +279,29 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       }
     }
     else{ # switch order of idx and theta if col number is negative
-      curr_row = r
-      curr_col = cc
+      
+      curr_row = 1
+      curr_col = -cc
       
       #Matrix indices that this beam goes through
-      idx = c(calc_index(r, curr_row, curr_col))
+      idx = c()
       
       # thetas intersected
-      hit_thetas = c(THETA[curr_row, curr_col])
+      hit_thetas = c()
       
+      # while still in bounds of the scan
       while((1 <= curr_row && curr_row <= r) && 
             (1 <= curr_col && curr_col <= c)){
-        curr_row = curr_row - 1
-        curr_col = curr_col - 1
+        
         idx = c(idx, calc_index(r, curr_row, curr_col))
         hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
+        curr_row = curr_row + 1
+        curr_col = curr_col - 1
+        
       }
+      
+      idx <- rev(idx)
+      hit_thetas <- rev(hit_thetas)
       
     }
     
@@ -321,22 +341,29 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       }
     }
     else{ # switch order of idx and theta if col number is negative
-      curr_row = r
-      curr_col = cc
+      
+      curr_row = 1
+      curr_col = -cc
       
       #Matrix indices that this beam goes through
-      idx = c(calc_index(r, curr_row, curr_col))
+      idx = c()
       
       # thetas intersected
-      hit_thetas = c(THETA[curr_row, curr_col])
+      hit_thetas = c()
       
+      # while still in bounds of the scan
       while((1 <= curr_row && curr_row <= r) && 
             (1 <= curr_col && curr_col <= c)){
-        curr_row = curr_row - 1
-        curr_col = curr_col + 1
+        
         idx = c(idx, calc_index(r, curr_row, curr_col))
         hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
+        curr_row = curr_row + 1
+        curr_col = curr_col + 1
+        
       }
+      
+      idx <- rev(idx)
+      hit_thetas <- rev(hit_thetas)
       
     }
     
