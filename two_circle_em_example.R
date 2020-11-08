@@ -74,7 +74,7 @@ plot_matrix(sq_diff_mat)
 
 # MSE:
 
-sqrt(sum(sq_diff_mat)) / num_pixel 
+sqrt(sum(sq_diff_mat) / num_pixel) 
 # 0 diag  0.08450741
 
 # 1 diag  0.07840016

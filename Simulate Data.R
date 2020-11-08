@@ -9,9 +9,10 @@ calc_index = function(nrow, x, y){
 
 
 #Function which generates the observed data for a single theta vector
-data_gen <- function(theta, d){
+data_gen <- function(theta, d, l){
   #Theta is the given theta vector used to compute attenutation probs.
   #d is mean of initial Poisson distribution
+  #l is the length of each projection through each pixel
   
   p = length(theta)
   
@@ -24,8 +25,8 @@ data_gen <- function(theta, d){
   X = c(X1, rep(0, p)) #Vector to hold the number of counts after each interaction
   
   for(j in 1:p){
-    X[j+1] <- rbinom(1, size = X[j], prob = exp(-theta[j]))
-    #Generate the number of photons from Binom(X_i, exp(theta_i))
+    X[j+1] <- rbinom(1, size = X[j], prob = exp(-theta[j] * l))
+    #Generate the number of photons from Binom(X_i, exp(-theta_i * l))
   }
   
   Y = X[p+1] #Actually observed data (number of counts)
@@ -52,7 +53,7 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
   
   #Return length(ROW)+length(COL) list
   #with d, indices (in order) beam went through, counts
-  proj.list <- vector("list", (length(ROW) + length(COL)) * reps)
+  proj.list <- vector("list", 1)
   
   pl_idx <- 1
   
@@ -61,12 +62,12 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
     #Run over ROWS first
     for(rr in ROW){
       if(rr > 0){
-        y <- data_gen(THETA[rr,THETA[rr,]>=0], d)
+        y <- data_gen(THETA[rr,THETA[rr,]>=0], d, l = 1)
         #Matrix indices that this beam goes through
         idx = seq(rr, rr+(c-1)*r, r)
         idx = idx[which(THETA[rr,]>=0, arr.ind=TRUE)] #Drop indices with negative thetas
       }else{ #switch order of theta if row number is negative
-        y <- data_gen(rev(THETA[-(rr),THETA[-(rr),]>=0]), d)
+        y <- data_gen(rev(THETA[-(rr),THETA[-(rr),]>=0]), d, l = 1)
         #Matrix indices that this beam goes through
         idx = seq(-rr, -rr+(c-1)*r, r)
         idx = rev(idx[which(THETA[-rr,]>=0, arr.ind=TRUE)])
@@ -79,11 +80,11 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
     #Run over COLS second
     for(cc in COL){
       if(cc >0){
-        y<- data_gen(THETA[THETA[,cc]>=0,cc], d)
+        y<- data_gen(THETA[THETA[,cc]>=0,cc], d, l = 1)
         idx = seq((cc-1)*r+1, cc*r, 1)
         idx = idx[which(THETA[,cc]>=0, arr.ind = TRUE)] # Drop indices with negative thetas
       }else{
-        y <- data_gen(rev(THETA[THETA[,-(cc)]>=0,-(cc)]), d)
+        y <- data_gen(rev(THETA[THETA[,-(cc)]>=0,-(cc)]), d, l = 1)
         idx = seq((-cc-1)*r+1, -cc*r, 1)
         idx = rev(idx[which(THETA[,-cc]>=0, arr.ind=TRUE)])
       }
@@ -134,7 +135,7 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
           hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
         }
 
-      y <- data_gen(hit_thetas, d)
+      y <- data_gen(hit_thetas, d, l = sqrt(2))
       idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
 
       if(length(idx) != 0 && ! is.na(y)){
@@ -187,7 +188,7 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
           hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
         }
         
-        y <- data_gen(hit_thetas, d)
+        y <- data_gen(hit_thetas, d, l = sqrt(2))
         idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
         
         if(length(idx) != 0 && ! is.na(y)){
@@ -240,7 +241,7 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
           hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
         }
         
-        y <- data_gen(hit_thetas, d)
+        y <- data_gen(hit_thetas, d, l = sqrt(2))
         idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
         
         if(length(idx) != 0 && ! is.na(y)){
@@ -293,7 +294,7 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
           hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
         }
         
-        y <- data_gen(hit_thetas, d)
+        y <- data_gen(hit_thetas, d, l = sqrt(2))
         idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
         
         if(length(idx) != 0 && ! is.na(y)){
