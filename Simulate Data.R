@@ -116,8 +116,7 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
 #' also be generated)
 #' @param run denominator of the slope of the parallel projections (projections perpendicular to them will 
 #' also be generated)
-#' Note: the slope is assumed to be positive.
-#' Also, the maximum of (rise, run) is assumed to be a multiple of the minimum of (rise, run). 
+#' Note: One of rise or run is assumed to be one, and the other is assumed to be an integer >= one.
 #' @return estimated theta values
 #' @export
 angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
