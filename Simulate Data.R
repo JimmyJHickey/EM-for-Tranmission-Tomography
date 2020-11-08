@@ -173,10 +173,10 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
         hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
       }
       
-      y <- data_gen(hit_thetas, d, l = l)
-      idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
-      
     }
+    
+    y <- data_gen(hit_thetas, d, l = l)
+    idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
     
     if(length(idx) != 0 && ! is.na(y)){
       add.list <- list(d = d, l = l, idx = idx, y = y)
@@ -227,10 +227,10 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
         hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
       }
       
-      y <- data_gen(hit_thetas, d, l = l)
-      idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
-      
     }
+    
+    y <- data_gen(hit_thetas, d, l = l)
+    idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
     
     if(length(idx) != 0 && ! is.na(y)){
       add.list <- list(d = d, l = l, idx = idx, y = y)
@@ -281,10 +281,10 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
         hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
       }
       
-      y <- data_gen(hit_thetas, d, l = l)
-      idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
-      
     }
+    
+    y <- data_gen(hit_thetas, d, l = l)
+    idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
     
     if(length(idx) != 0 && ! is.na(y)){
       add.list <- list(d = d, l = l, idx = idx, y = y)
@@ -335,10 +335,10 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
         hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
       }
       
-      y <- data_gen(hit_thetas, d, l = l)
-      idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
-      
     }
+    
+    y <- data_gen(hit_thetas, d, l = l)
+    idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
     
     if(length(idx) != 0 && ! is.na(y)){
       add.list <- list(d = d, l = l, idx = idx, y = y)
@@ -349,9 +349,8 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
   }
   
 }
-  
-  
-  
-  
-  
-  
+
+
+
+
+
