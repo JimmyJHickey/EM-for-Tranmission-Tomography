@@ -138,12 +138,14 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
       y <- data_gen(hit_thetas, d, l = sqrt(2))
       idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
 
+      }
+      
       if(length(idx) != 0 && ! is.na(y)){
         add.list <- list(d = d, l = sqrt(2), idx = idx, y = y)
         proj.list[[pl_idx]] <- add.list
         pl_idx <- pl_idx + 1
-        }
       }
+      
     }
 
     # Run over diagonal 2
@@ -191,12 +193,14 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
         y <- data_gen(hit_thetas, d, l = sqrt(2))
         idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
         
-        if(length(idx) != 0 && ! is.na(y)){
-          add.list <- list(d = d, l = sqrt(2), idx = idx, y = y)
-          proj.list[[pl_idx]] <- add.list
-          pl_idx <- pl_idx + 1
-        }
       }
+      
+      if(length(idx) != 0 && ! is.na(y)){
+        add.list <- list(d = d, l = sqrt(2), idx = idx, y = y)
+        proj.list[[pl_idx]] <- add.list
+        pl_idx <- pl_idx + 1
+      }
+      
     }
     
     # Run over diagonal 3
@@ -244,12 +248,14 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
         y <- data_gen(hit_thetas, d, l = sqrt(2))
         idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
         
-        if(length(idx) != 0 && ! is.na(y)){
-          add.list <- list(d = d, l = sqrt(2), idx = idx, y = y)
-          proj.list[[pl_idx]] <- add.list
-          pl_idx <- pl_idx + 1
-        }
       }
+      
+      if(length(idx) != 0 && ! is.na(y)){
+        add.list <- list(d = d, l = sqrt(2), idx = idx, y = y)
+        proj.list[[pl_idx]] <- add.list
+        pl_idx <- pl_idx + 1
+      }
+      
     }
     
     # Run over diagonal 4
@@ -297,12 +303,14 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
         y <- data_gen(hit_thetas, d, l = sqrt(2))
         idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
         
-        if(length(idx) != 0 && ! is.na(y)){
-          add.list <- list(d = d, l = sqrt(2), idx = idx, y = y)
-          proj.list[[pl_idx]] <- add.list
-          pl_idx <- pl_idx + 1
-        }
       }
+      
+      if(length(idx) != 0 && ! is.na(y)){
+        add.list <- list(d = d, l = sqrt(2), idx = idx, y = y)
+        proj.list[[pl_idx]] <- add.list
+        pl_idx <- pl_idx + 1
+      }
+      
     }
     
   }
