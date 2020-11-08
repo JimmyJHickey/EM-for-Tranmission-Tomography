@@ -189,10 +189,11 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       
     }
     
-    y <- data_gen(hit_thetas, d, l = l)
-    idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
+    idx = idx[hit_thetas >= 0] #Drop indices with negative thetas
+    hit_thetas <- hit_thetas[hit_thetas >= 0]
     
-    if(length(idx) != 0 && ! is.na(y)){
+    if(length(idx) != 0){ # if the projection didn't only go through -1's
+      y <- data_gen(hit_thetas, d, l = l)
       add.list <- list(d = d, l = l, idx = idx, y = y)
       proj.list[[pl_idx]] <- add.list
       pl_idx <- pl_idx + 1
@@ -251,10 +252,11 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       
     }
     
-    y <- data_gen(hit_thetas, d, l = l)
-    idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
+    idx = idx[hit_thetas >= 0] #Drop indices with negative thetas
+    hit_thetas <- hit_thetas[hit_thetas >= 0]
     
-    if(length(idx) != 0 && ! is.na(y)){
+    if(length(idx) != 0){ # if the projection didn't only go through -1's
+      y <- data_gen(hit_thetas, d, l = l)
       add.list <- list(d = d, l = l, idx = idx, y = y)
       proj.list[[pl_idx]] <- add.list
       pl_idx <- pl_idx + 1
@@ -313,10 +315,11 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       
     }
     
-    y <- data_gen(hit_thetas, d, l = l)
-    idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
+    idx = idx[hit_thetas >= 0] #Drop indices with negative thetas
+    hit_thetas <- hit_thetas[hit_thetas >= 0]
     
-    if(length(idx) != 0 && ! is.na(y)){
+    if(length(idx) != 0){ # if the projection didn't only go through -1's
+      y <- data_gen(hit_thetas, d, l = l)
       add.list <- list(d = d, l = l, idx = idx, y = y)
       proj.list[[pl_idx]] <- add.list
       pl_idx <- pl_idx + 1
@@ -375,10 +378,11 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       
     }
     
-    y <- data_gen(hit_thetas, d, l = l)
-    idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
+    idx = idx[hit_thetas >= 0] #Drop indices with negative thetas
+    hit_thetas <- hit_thetas[hit_thetas >= 0]
     
-    if(length(idx) != 0 && ! is.na(y)){
+    if(length(idx) != 0){ # if the projection didn't only go through -1's
+      y <- data_gen(hit_thetas, d, l = l)
       add.list <- list(d = d, l = l, idx = idx, y = y)
       proj.list[[pl_idx]] <- add.list
       pl_idx <- pl_idx + 1
