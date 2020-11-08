@@ -140,19 +140,20 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       curr_col = 1
       
       #Matrix indices that this beam goes through
-      idx = c(calc_index(r, curr_row, curr_col))
+      idx = c()
       
       # thetas intersected
-      hit_thetas = c(THETA[curr_row, curr_col])
+      hit_thetas = c()
       
       # while still in bounds of the scan
       while((0 < curr_row && curr_row < r) && 
             (0 < curr_col && curr_col < c)){
         
-        curr_row = curr_row+1
-        curr_col = curr_col+1
         idx = c(idx, calc_index(r, curr_row, curr_col))
         hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
+        curr_row = curr_row+1
+        curr_col = curr_col+1
+        
       }
     }
     else{ #switch order of theta if row number is negative
@@ -194,19 +195,20 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       curr_col = 1
       
       #Matrix indices that this beam goes through
-      idx = c(calc_index(r, curr_row, curr_col))
+      idx = c()
       
       # thetas intersected
-      hit_thetas = c(THETA[curr_row, curr_col])
+      hit_thetas = c()
       
       # while still in bounds of the scan
       while((0 < curr_row && curr_row < r) && 
             (0 < curr_col && curr_col < c)){
-        
+    
+        idx = c(idx, calc_index(r, curr_row, curr_col))
+        hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])    
         curr_row = curr_row - 1
         curr_col = curr_col + 1
-        idx = c(idx, calc_index(r, curr_row, curr_col))
-        hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
+    
       }
     }
     else{ #switch order of theta if row number is negative
@@ -248,19 +250,20 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       curr_col = cc
       
       #Matrix indices that this beam goes through
-      idx = c(calc_index(r, curr_row, curr_col))
+      idx = c()
       
       # thetas intersected
-      hit_thetas = c(THETA[curr_row, curr_col])
+      hit_thetas = c()
       
       # while still in bounds of the scan
       while((0 < curr_row && curr_row < r) && 
             (0 < curr_col && curr_col < c)){
         
-        curr_row = curr_row + 1
-        curr_col = curr_col - 1
         idx = c(idx, calc_index(r, curr_row, curr_col))
         hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
+        curr_row = curr_row + 1
+        curr_col = curr_col - 1
+        
       }
     }
     else{ #switch order of theta if row number is negative
@@ -302,19 +305,20 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       curr_col = cc
       
       #Matrix indices that this beam goes through
-      idx = c(calc_index(r, curr_row, curr_col))
+      idx = c()
       
       # thetas intersected
-      hit_thetas = c(THETA[curr_row, curr_col])
+      hit_thetas = c()
       
       # while still in bounds of the scan
       while((0 < curr_row && curr_row < r) && 
             (0 < curr_col && curr_col < c)){
         
-        curr_row = curr_row + 1
-        curr_col = curr_col + 1
         idx = c(idx, calc_index(r, curr_row, curr_col))
         hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
+        curr_row = curr_row + 1
+        curr_col = curr_col + 1
+        
       }
     }
     else{ #switch order of theta if row number is negative
