@@ -156,7 +156,7 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
         
       }
     }
-    else{ #switch order of theta if row number is negative
+    else{ # switch order of idx and theta if row number is negative
       curr_row = rr
       curr_col = c
       
@@ -211,7 +211,7 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
     
       }
     }
-    else{ #switch order of theta if row number is negative
+    else{ # switch order of idx and theta if row number is negative
       curr_row = rr
       curr_col = c
       
@@ -266,7 +266,7 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
         
       }
     }
-    else{ #switch order of theta if row number is negative
+    else{ # switch order of idx and theta if col number is negative
       curr_row = r
       curr_col = cc
       
@@ -321,7 +321,7 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
         
       }
     }
-    else{ #switch order of theta if row number is negative
+    else{ # switch order of idx and theta if col number is negative
       curr_row = r
       curr_col = cc
       
