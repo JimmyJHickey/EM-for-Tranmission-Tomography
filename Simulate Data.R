@@ -16,8 +16,8 @@ data_gen <- function(theta, d, l){
   
   p = length(theta)
   
-  if(p<=0){#If empty theta vector is given, return # of emitted photons
-    return(d)
+  if(p<=0){#If empty theta vector is given, return NA
+    return(NA)
   }
   
   X1 = rpois(1, lambda = d) #Initial number of counts from Poisson dist.
@@ -72,9 +72,13 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
         idx = seq(-rr, -rr+(c-1)*r, r)
         idx = rev(idx[which(THETA[-rr,]>=0, arr.ind=TRUE)])
       }
-      add.list <- list(d = d, l = 1, idx = idx, y = y)
-      proj.list[[pl_idx]] <- add.list
-      pl_idx <- pl_idx + 1
+      
+      if (!is.na(y)) {
+        add.list <- list(d = d, l = 1, idx = idx, y = y)
+        proj.list[[pl_idx]] <- add.list
+        pl_idx <- pl_idx + 1
+      }
+      
     }
     
     #Run over COLS second
@@ -88,9 +92,13 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
         idx = seq((-cc-1)*r+1, -cc*r, 1)
         idx = rev(idx[which(THETA[,-cc]>=0, arr.ind=TRUE)])
       }
-      add.list <- list(d = d, l = 1, idx = idx, y = y)
-      proj.list[[pl_idx]] <- add.list
-      pl_idx <- pl_idx + 1
+      
+      if (!is.na(y)) {
+        add.list <- list(d = d, l = 1, idx = idx, y = y)
+        proj.list[[pl_idx]] <- add.list
+        pl_idx <- pl_idx + 1
+      }
+      
     }
     
     ###########
@@ -208,12 +216,12 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       # while still in bounds of the scan
       while((1 <= curr_row && curr_row <= r) && 
             (1 <= curr_col && curr_col <= c)){
-    
+        
         idx = c(idx, calc_index(r, curr_row, curr_col))
         hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])    
         curr_row = curr_row - 1
         curr_col = curr_col + 1
-    
+        
       }
     }
     else{ # switch order of idx and theta if row number is negative
@@ -377,6 +385,8 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
     }
     
   }
+  
+  
   
 }
 
