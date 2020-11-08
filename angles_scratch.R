@@ -1,4 +1,10 @@
 
+calc_index = function(nrow, x, y){
+  return(nrow * (y-1) + x)
+}
+
+
+
 # detecting if any projections have length sqrt(2) (or not 1), indicating non-90 degree angles
 
 d_sqrt2 <- function(proj_list) {
@@ -41,6 +47,29 @@ neg_idx <- function(proj_list) {
 
 
 
+
+
+# Really simple circle to test things with
+
+set.seed(627)
+
+radius = 1
+
+in_circ = in_circle(radius)
+plot_matrix(in_circ)
+
+circle_theta  = circle_pattern(in_circ, 2, 10, 10)
+plot_matrix(circle_theta)
+
+bounds <- 2:(nrow(circle_theta) - 1)
+
+
+
+THETA <- circle_theta
+
+ROW = c(bounds, -bounds)
+
+COL = c(bounds, -bounds)
 
 
 

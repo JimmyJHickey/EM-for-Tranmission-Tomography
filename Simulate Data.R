@@ -76,7 +76,7 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
       proj.list[[pl_idx]] <- add.list
       pl_idx <- pl_idx + 1
     }
-  
+    
     #Run over COLS second
     for(cc in COL){
       if(cc >0){
@@ -93,230 +93,259 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
       pl_idx <- pl_idx + 1
     }
     
-    # Run over diagonal 1
-    # starting on rows and going down
-    for(rr in ROW){
-      if(rr > 0){
-
-        curr_row = rr
-        curr_col = 1
-
-        #Matrix indices that this beam goes through
-        idx = c(calc_index(r, curr_row, curr_col))
-
-        # thetas intersected
-        hit_thetas = c(THETA[curr_row, curr_col])
-
-        # while still in bounds of the scan
-        while((0 < curr_row && curr_row < r) && 
-              (0 < curr_col && curr_col < c)){
-          
-          curr_row = curr_row+1
-          curr_col = curr_col+1
-          idx = c(idx, calc_index(r, curr_row, curr_col))
-          hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
-        }
-      }
-      else{ #switch order of theta if row number is negative
-        curr_row = rr
-        curr_col = c
-
-        #Matrix indices that this beam goes through
-        idx = c(calc_index(r, curr_row, curr_col))
-
-        # thetas intersected
-        hit_thetas = c(THETA[curr_row, curr_col])
-
-        while((0 < curr_row && curr_row < r) && 
-              (0 < curr_col && curr_col < c)){
-          curr_row = curr_row + 1
-          curr_col = curr_col - 1
-          idx = c(idx, calc_index(r, curr_row, curr_col))
-          hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
-        }
-
-      y <- data_gen(hit_thetas, d, l = sqrt(2))
-      idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
-
-      }
-      
-      if(length(idx) != 0 && ! is.na(y)){
-        add.list <- list(d = d, l = sqrt(2), idx = idx, y = y)
-        proj.list[[pl_idx]] <- add.list
-        pl_idx <- pl_idx + 1
-      }
-      
-    }
-
-    # Run over diagonal 2
-    # starting on rows and going up
-    for(rr in ROW){
-      if(rr > 0){
-        
-        curr_row = rr
-        curr_col = 1
-        
-        #Matrix indices that this beam goes through
-        idx = c(calc_index(r, curr_row, curr_col))
-        
-        # thetas intersected
-        hit_thetas = c(THETA[curr_row, curr_col])
-        
-        # while still in bounds of the scan
-        while((0 < curr_row && curr_row < r) && 
-              (0 < curr_col && curr_col < c)){
-          
-          curr_row = curr_row - 1
-          curr_col = curr_col + 1
-          idx = c(idx, calc_index(r, curr_row, curr_col))
-          hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
-        }
-      }
-      else{ #switch order of theta if row number is negative
-        curr_row = rr
-        curr_col = c
-        
-        #Matrix indices that this beam goes through
-        idx = c(calc_index(r, curr_row, curr_col))
-        
-        # thetas intersected
-        hit_thetas = c(THETA[curr_row, curr_col])
-        
-        while((0 < curr_row && curr_row < r) && 
-              (0 < curr_col && curr_col < c)){
-          curr_row = curr_row - 1
-          curr_col = curr_col - 1
-          idx = c(idx, calc_index(r, curr_row, curr_col))
-          hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
-        }
-        
-        y <- data_gen(hit_thetas, d, l = sqrt(2))
-        idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
-        
-      }
-      
-      if(length(idx) != 0 && ! is.na(y)){
-        add.list <- list(d = d, l = sqrt(2), idx = idx, y = y)
-        proj.list[[pl_idx]] <- add.list
-        pl_idx <- pl_idx + 1
-      }
-      
-    }
-    
-    # Run over diagonal 3
-    # starting on cols and going left
-    for(cc in COL){
-      if(cc > 0){
-        
-        curr_row = 1
-        curr_col = cc
-        
-        #Matrix indices that this beam goes through
-        idx = c(calc_index(r, curr_row, curr_col))
-        
-        # thetas intersected
-        hit_thetas = c(THETA[curr_row, curr_col])
-        
-        # while still in bounds of the scan
-        while((0 < curr_row && curr_row < r) && 
-              (0 < curr_col && curr_col < c)){
-          
-          curr_row = curr_row + 1
-          curr_col = curr_col - 1
-          idx = c(idx, calc_index(r, curr_row, curr_col))
-          hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
-        }
-      }
-      else{ #switch order of theta if row number is negative
-        curr_row = r
-        curr_col = cc
-        
-        #Matrix indices that this beam goes through
-        idx = c(calc_index(r, curr_row, curr_col))
-        
-        # thetas intersected
-        hit_thetas = c(THETA[curr_row, curr_col])
-        
-        while((0 < curr_row && curr_row < r) && 
-              (0 < curr_col && curr_col < c)){
-          curr_row = curr_row - 1
-          curr_col = curr_col - 1
-          idx = c(idx, calc_index(r, curr_row, curr_col))
-          hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
-        }
-        
-        y <- data_gen(hit_thetas, d, l = sqrt(2))
-        idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
-        
-      }
-      
-      if(length(idx) != 0 && ! is.na(y)){
-        add.list <- list(d = d, l = sqrt(2), idx = idx, y = y)
-        proj.list[[pl_idx]] <- add.list
-        pl_idx <- pl_idx + 1
-      }
-      
-    }
-    
-    # Run over diagonal 4
-    # starting on cols and going right
-    for(cc in COL){
-      if(cc > 0){
-        
-        curr_row = 1
-        curr_col = cc
-        
-        #Matrix indices that this beam goes through
-        idx = c(calc_index(r, curr_row, curr_col))
-        
-        # thetas intersected
-        hit_thetas = c(THETA[curr_row, curr_col])
-        
-        # while still in bounds of the scan
-        while((0 < curr_row && curr_row < r) && 
-              (0 < curr_col && curr_col < c)){
-          
-          curr_row = curr_row + 1
-          curr_col = curr_col + 1
-          idx = c(idx, calc_index(r, curr_row, curr_col))
-          hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
-        }
-      }
-      else{ #switch order of theta if row number is negative
-        curr_row = r
-        curr_col = cc
-        
-        #Matrix indices that this beam goes through
-        idx = c(calc_index(r, curr_row, curr_col))
-        
-        # thetas intersected
-        hit_thetas = c(THETA[curr_row, curr_col])
-        
-        while((0 < curr_row && curr_row < r) && 
-              (0 < curr_col && curr_col < c)){
-          curr_row = curr_row - 1
-          curr_col = curr_col + 1
-          idx = c(idx, calc_index(r, curr_row, curr_col))
-          hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
-        }
-        
-        y <- data_gen(hit_thetas, d, l = sqrt(2))
-        idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
-        
-      }
-      
-      if(length(idx) != 0 && ! is.na(y)){
-        add.list <- list(d = d, l = sqrt(2), idx = idx, y = y)
-        proj.list[[pl_idx]] <- add.list
-        pl_idx <- pl_idx + 1
-      }
-      
-    }
+    ###########
+    # put diagonal projection function here
+    # remember to increase the pl_idx accordingly
+    ###########
     
   }
   
-  #Return list with d, idx, y for each 
+  #Return list with d, l, idx, y for each 
   return(proj.list)
 }
+
+
+
+#' Function to generate one set of angular projections, to be used within data_gen_df
+#'
+#' @param THETA input theta matrix used to compute probs.
+#' @param d Poisson mean for initial Poisson generation
+#' @param ROW rows which we project on (vector) Enter negative row number to get opposite direction
+#' @param COL columns which we project on (vector) Enter negative col number to get opposite direction
+#' @param rise numerator of the slope of the parallel projections (projections perpendicular to them will 
+#' also be generated)
+#' @param run denominator of the slope of the parallel projections (projections perpendicular to them will 
+#' also be generated)
+#' Note: the slope is assumed to be positive.
+#' Also, the maximum of (rise, run) is assumed to be a multiple of the minimum of (rise, run). 
+#' @return estimated theta values
+#' @export
+angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run)
+  
+  rise_init <- rise
+run_init <- run
+
+# standardize the slope 
+rise <- rise / max(rise_init, run_init)
+run <- run / max(rise_init, run_init)
+
+# 1. Projections with slope (rise/run), starting from left wall
+for(rr in ROW){
+  if(rr > 0){
+    
+    curr_row = rr
+    curr_col = 1
+    
+    #Matrix indices that this beam goes through
+    idx = c(calc_index(r, curr_row, curr_col))
+    
+    # thetas intersected
+    hit_thetas = c(THETA[curr_row, curr_col])
+    
+    # while still in bounds of the scan
+    while((0 < curr_row && curr_row < r) && 
+          (0 < curr_col && curr_col < c)){
+      
+      curr_row = curr_row+1
+      curr_col = curr_col+1
+      idx = c(idx, calc_index(r, curr_row, curr_col))
+      hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
+    }
+  }
+  else{ #switch order of theta if row number is negative
+    curr_row = rr
+    curr_col = c
+    
+    #Matrix indices that this beam goes through
+    idx = c(calc_index(r, curr_row, curr_col))
+    
+    # thetas intersected
+    hit_thetas = c(THETA[curr_row, curr_col])
+    
+    while((0 < curr_row && curr_row < r) && 
+          (0 < curr_col && curr_col < c)){
+      curr_row = curr_row + 1
+      curr_col = curr_col - 1
+      idx = c(idx, calc_index(r, curr_row, curr_col))
+      hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
+    }
+    
+    y <- data_gen(hit_thetas, d, l = sqrt(2))
+    idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
+    
+  }
+  
+  if(length(idx) != 0 && ! is.na(y)){
+    add.list <- list(d = d, l = sqrt(2), idx = idx, y = y)
+    proj.list[[pl_idx]] <- add.list
+    pl_idx <- pl_idx + 1
+  }
+  
+}
+
+# 2. Projections with slope (-run/rise), starting from left wall
+for(rr in ROW){
+  if(rr > 0){
+    
+    curr_row = rr
+    curr_col = 1
+    
+    #Matrix indices that this beam goes through
+    idx = c(calc_index(r, curr_row, curr_col))
+    
+    # thetas intersected
+    hit_thetas = c(THETA[curr_row, curr_col])
+    
+    # while still in bounds of the scan
+    while((0 < curr_row && curr_row < r) && 
+          (0 < curr_col && curr_col < c)){
+      
+      curr_row = curr_row - 1
+      curr_col = curr_col + 1
+      idx = c(idx, calc_index(r, curr_row, curr_col))
+      hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
+    }
+  }
+  else{ #switch order of theta if row number is negative
+    curr_row = rr
+    curr_col = c
+    
+    #Matrix indices that this beam goes through
+    idx = c(calc_index(r, curr_row, curr_col))
+    
+    # thetas intersected
+    hit_thetas = c(THETA[curr_row, curr_col])
+    
+    while((0 < curr_row && curr_row < r) && 
+          (0 < curr_col && curr_col < c)){
+      curr_row = curr_row - 1
+      curr_col = curr_col - 1
+      idx = c(idx, calc_index(r, curr_row, curr_col))
+      hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
+    }
+    
+    y <- data_gen(hit_thetas, d, l = sqrt(2))
+    idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
+    
+  }
+  
+  if(length(idx) != 0 && ! is.na(y)){
+    add.list <- list(d = d, l = sqrt(2), idx = idx, y = y)
+    proj.list[[pl_idx]] <- add.list
+    pl_idx <- pl_idx + 1
+  }
+  
+}
+
+# 3. Projections with slope (rise/run), starting from bottom wall
+for(cc in COL){
+  if(cc > 0){
+    
+    curr_row = 1
+    curr_col = cc
+    
+    #Matrix indices that this beam goes through
+    idx = c(calc_index(r, curr_row, curr_col))
+    
+    # thetas intersected
+    hit_thetas = c(THETA[curr_row, curr_col])
+    
+    # while still in bounds of the scan
+    while((0 < curr_row && curr_row < r) && 
+          (0 < curr_col && curr_col < c)){
+      
+      curr_row = curr_row + 1
+      curr_col = curr_col - 1
+      idx = c(idx, calc_index(r, curr_row, curr_col))
+      hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
+    }
+  }
+  else{ #switch order of theta if row number is negative
+    curr_row = r
+    curr_col = cc
+    
+    #Matrix indices that this beam goes through
+    idx = c(calc_index(r, curr_row, curr_col))
+    
+    # thetas intersected
+    hit_thetas = c(THETA[curr_row, curr_col])
+    
+    while((0 < curr_row && curr_row < r) && 
+          (0 < curr_col && curr_col < c)){
+      curr_row = curr_row - 1
+      curr_col = curr_col - 1
+      idx = c(idx, calc_index(r, curr_row, curr_col))
+      hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
+    }
+    
+    y <- data_gen(hit_thetas, d, l = sqrt(2))
+    idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
+    
+  }
+  
+  if(length(idx) != 0 && ! is.na(y)){
+    add.list <- list(d = d, l = sqrt(2), idx = idx, y = y)
+    proj.list[[pl_idx]] <- add.list
+    pl_idx <- pl_idx + 1
+  }
+  
+}
+
+# 4. Projections with slope (-run/rise), starting from top wall
+for(cc in COL){
+  if(cc > 0){
+    
+    curr_row = 1
+    curr_col = cc
+    
+    #Matrix indices that this beam goes through
+    idx = c(calc_index(r, curr_row, curr_col))
+    
+    # thetas intersected
+    hit_thetas = c(THETA[curr_row, curr_col])
+    
+    # while still in bounds of the scan
+    while((0 < curr_row && curr_row < r) && 
+          (0 < curr_col && curr_col < c)){
+      
+      curr_row = curr_row + 1
+      curr_col = curr_col + 1
+      idx = c(idx, calc_index(r, curr_row, curr_col))
+      hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
+    }
+  }
+  else{ #switch order of theta if row number is negative
+    curr_row = r
+    curr_col = cc
+    
+    #Matrix indices that this beam goes through
+    idx = c(calc_index(r, curr_row, curr_col))
+    
+    # thetas intersected
+    hit_thetas = c(THETA[curr_row, curr_col])
+    
+    while((0 < curr_row && curr_row < r) && 
+          (0 < curr_col && curr_col < c)){
+      curr_row = curr_row - 1
+      curr_col = curr_col + 1
+      idx = c(idx, calc_index(r, curr_row, curr_col))
+      hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
+    }
+    
+    y <- data_gen(hit_thetas, d, l = sqrt(2))
+    idx = idx[which(hit_thetas >= 0)] #Drop indices with negative thetas
+    
+  }
+  
+  if(length(idx) != 0 && ! is.na(y)){
+    add.list <- list(d = d, l = sqrt(2), idx = idx, y = y)
+    proj.list[[pl_idx]] <- add.list
+    pl_idx <- pl_idx + 1
+  }
+  
+}
+
+
+
 
 
