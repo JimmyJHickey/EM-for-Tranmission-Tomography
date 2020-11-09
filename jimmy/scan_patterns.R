@@ -55,7 +55,7 @@ checker_pattern = function(in_mat, row = TRUE, line_number = 0){
       if((in_mat[x,y] > 0) ){
         # if on, generate a new data point
         if(on){
-          out_mat[x,y] = out_mat[x,y] + abs(rnorm(1, 1, 2.5))
+          out_mat[x,y] = out_mat[x,y] + abs(rnorm(1, 1, 1))
         }
       } 
     }
@@ -77,7 +77,7 @@ circle_pattern = function(in_mat, radius, center_x, center_y){
           # distance from center of inscribed circle
            out_mat[x,y] = out_mat[x,y] +  abs(rnorm(1, 
                               1/sqrt( 1+(x - center_x)^2 + (y - center_y)^2), 
-                              2.5))
+                              1))
       } 
     }
   }
