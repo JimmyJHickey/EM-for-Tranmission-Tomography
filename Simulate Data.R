@@ -129,6 +129,9 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
 #' @export
 angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
   
+  r = dim(THETA)[1] #Number of rows in THETA
+  c = dim(THETA)[2] #Number of cols in THETA
+  
   rise_init <- rise
   run_init <- run
   
@@ -161,13 +164,13 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       hit_thetas = c()
       
       # while still in bounds of the scan
-      while((1 <= curr_row && curr_row <= r) && 
-            (1 <= curr_col && curr_col <= c)){
+      while((1 <= floor(curr_row) && floor(curr_row) <= r) && 
+            (1 <= floor(curr_col) && floor(curr_col) <= c)){
         
-        idx = c(idx, calc_index(r, curr_row, curr_col))
-        hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
-        curr_row = curr_row+1
-        curr_col = curr_col+1
+        idx = c(idx, calc_index(r, floor(curr_row), floor(curr_col)))
+        hit_thetas = c(hit_thetas, THETA[floor(curr_row), floor(curr_col)])
+        curr_row = curr_row + rise
+        curr_col = curr_col + run
         
       }
     }
@@ -182,13 +185,13 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       hit_thetas = c()
       
       # while still in bounds of the scan
-      while((1 <= curr_row && curr_row <= r) && 
-            (1 <= curr_col && curr_col <= c)){
+      while((1 <= floor(curr_row) && floor(curr_row) <= r) && 
+            (1 <= floor(curr_col) && floor(curr_col) <= c)){
         
-        idx = c(idx, calc_index(r, curr_row, curr_col))
-        hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
-        curr_row = curr_row+1
-        curr_col = curr_col+1
+        idx = c(idx, calc_index(r, floor(curr_row), floor(curr_col)))
+        hit_thetas = c(hit_thetas, THETA[floor(curr_row), floor(curr_col)])
+        curr_row = curr_row + rise
+        curr_col = curr_col + run
         
       }
       
@@ -223,13 +226,13 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       hit_thetas = c()
       
       # while still in bounds of the scan
-      while((1 <= curr_row && curr_row <= r) && 
-            (1 <= curr_col && curr_col <= c)){
+      while((1 <= floor(curr_row) && floor(curr_row) <= r) && 
+            (1 <= ceiling(curr_col) && ceiling(curr_col) <= c)){
         
-        idx = c(idx, calc_index(r, curr_row, curr_col))
-        hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])    
-        curr_row = curr_row - 1
-        curr_col = curr_col + 1
+        idx = c(idx, calc_index(r, floor(curr_row), ceiling(curr_col)))
+        hit_thetas = c(hit_thetas, THETA[floor(curr_row), ceiling(curr_col)])    
+        curr_row = curr_row - run
+        curr_col = curr_col + rise
         
       }
     }
@@ -245,13 +248,13 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       hit_thetas = c()
       
       # while still in bounds of the scan
-      while((1 <= curr_row && curr_row <= r) && 
-            (1 <= curr_col && curr_col <= c)){
+      while((1 <= floor(curr_row) && floor(curr_row) <= r) && 
+            (1 <= ceiling(curr_col) && ceiling(curr_col) <= c)){
         
-        idx = c(idx, calc_index(r, curr_row, curr_col))
-        hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])    
-        curr_row = curr_row - 1
-        curr_col = curr_col + 1
+        idx = c(idx, calc_index(r, floor(curr_row), ceiling(curr_col)))
+        hit_thetas = c(hit_thetas, THETA[floor(curr_row), ceiling(curr_col)])    
+        curr_row = curr_row - run
+        curr_col = curr_col + rise
         
       }
       
@@ -273,7 +276,7 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
   }
   
   # 3. Projections with slope (rise/run), starting from bottom wall
-  for(cc in COL){
+  for(cc in COL[abs(COL) != 1]){ # skipping one to avoid redundancy
     if(cc > 0){
       
       curr_row = 1
@@ -286,13 +289,13 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       hit_thetas = c()
       
       # while still in bounds of the scan
-      while((1 <= curr_row && curr_row <= r) && 
-            (1 <= curr_col && curr_col <= c)){
+      while((1 <= floor(curr_row) && floor(curr_row) <= r) && 
+            (1 <= floor(curr_col) && floor(curr_col) <= c)){
         
-        idx = c(idx, calc_index(r, curr_row, curr_col))
-        hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
-        curr_row = curr_row + 1
-        curr_col = curr_col - 1
+        idx = c(idx, calc_index(r, floor(curr_row), floor(curr_col)))
+        hit_thetas = c(hit_thetas, THETA[floor(curr_row), floor(curr_col)])
+        curr_row = curr_row + rise
+        curr_col = curr_col + run
         
       }
     }
@@ -308,13 +311,13 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       hit_thetas = c()
       
       # while still in bounds of the scan
-      while((1 <= curr_row && curr_row <= r) && 
-            (1 <= curr_col && curr_col <= c)){
+      while((1 <= floor(curr_row) && floor(curr_row) <= r) && 
+            (1 <= floor(curr_col) && floor(curr_col) <= c)){
         
-        idx = c(idx, calc_index(r, curr_row, curr_col))
-        hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
-        curr_row = curr_row + 1
-        curr_col = curr_col - 1
+        idx = c(idx, calc_index(r, floor(curr_row), floor(curr_col)))
+        hit_thetas = c(hit_thetas, THETA[floor(curr_row), floor(curr_col)])
+        curr_row = curr_row + rise
+        curr_col = curr_col + run
         
       }
       
@@ -336,10 +339,10 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
   }
   
   # 4. Projections with slope (-run/rise), starting from top wall
-  for(cc in COL){
+  for(cc in COL[abs(COL) != 1]){ # skipping one to avoid redundancy
     if(cc > 0){
       
-      curr_row = 1
+      curr_row = r
       curr_col = cc
       
       #Matrix indices that this beam goes through
@@ -349,19 +352,19 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       hit_thetas = c()
       
       # while still in bounds of the scan
-      while((1 <= curr_row && curr_row <= r) && 
-            (1 <= curr_col && curr_col <= c)){
+      while((1 <= floor(curr_row) && floor(curr_row) <= r) && 
+            (1 <= ceiling(curr_col) && ceiling(curr_col) <= c)){
         
-        idx = c(idx, calc_index(r, curr_row, curr_col))
-        hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
-        curr_row = curr_row + 1
-        curr_col = curr_col + 1
+        idx = c(idx, calc_index(r, floor(curr_row), ceiling(curr_col)))
+        hit_thetas = c(hit_thetas, THETA[floor(curr_row), ceiling(curr_col)])
+        curr_row = curr_row - run
+        curr_col = curr_col + rise
         
       }
     }
     else{ # switch order of idx and theta if col number is negative
       
-      curr_row = 1
+      curr_row = r
       curr_col = -cc
       
       #Matrix indices that this beam goes through
@@ -371,13 +374,13 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       hit_thetas = c()
       
       # while still in bounds of the scan
-      while((1 <= curr_row && curr_row <= r) && 
-            (1 <= curr_col && curr_col <= c)){
+      while((1 <= floor(curr_row) && floor(curr_row) <= r) && 
+            (1 <= ceiling(curr_col) && ceiling(curr_col) <= c)){
         
-        idx = c(idx, calc_index(r, curr_row, curr_col))
-        hit_thetas = c(hit_thetas, THETA[curr_row, curr_col])
-        curr_row = curr_row + 1
-        curr_col = curr_col + 1
+        idx = c(idx, calc_index(r, floor(curr_row), ceiling(curr_col)))
+        hit_thetas = c(hit_thetas, THETA[floor(curr_row), ceiling(curr_col)])
+        curr_row = curr_row - run
+        curr_col = curr_col + rise
         
       }
       
