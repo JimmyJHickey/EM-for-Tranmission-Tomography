@@ -36,7 +36,7 @@ one_nonzero_pattern = function(in_mat, X, Y){
   
   # if in the circle 
   if(in_mat[X,Y] > 0){
-    out_mat[X,Y] = out_mat[X,Y] + abs(rnorm(1, 1, 2.5))
+    out_mat[X,Y] = out_mat[X,Y] + abs(rnorm(1, 1, 1))
   }
   
   return(out_mat)
