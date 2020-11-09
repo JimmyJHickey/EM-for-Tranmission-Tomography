@@ -3,9 +3,67 @@
 #Eric Yanchenko (Alvin Sheng and Jimmy Hickey) [Copyright]
 #November 4, 2020
 
+# calculates column-majorized vector index of a matrix index
 calc_index = function(nrow, x, y){
   return(nrow * (y-1) + x)
 }
+
+
+
+# inverse of calc_index (for testing purposes)
+calc_matrix_index <- function(idx, num_row) {
+  
+  row_idx <- rep(NA, length(idx))
+  
+  col_idx <- rep(NA, length(idx))
+  
+  for (i in 1:length(idx)) {
+    
+    col_idx[i] <- ceiling(idx[i] / num_row) 
+    
+    row_idx[i] <- idx[i] - (col_idx[i] - 1) * num_row
+    
+  }
+  
+  return(cbind(row_idx, col_idx))
+  
+} 
+
+
+
+# returns a logical vector indicating the entries that are -1 and at either end of the vector
+# I use this method of taking out -1's, so I can detect weird cases in which 
+# -1 is in the middle of the vector instead
+neg_ends <- function(hit_thetas) {
+  
+  p <- length(hit_thetas)
+  
+  nends <- rep(FALSE, length(hit_thetas))
+  
+  i <- 1
+  
+  while (hit_thetas[i] < 0 && i <= p) {
+    nends[i] <- TRUE
+    i <- i + 1
+  }
+  
+  if (i == p) { # if it went through entire vector already
+    return(nends)
+  }
+  
+  # go from the other side
+  
+  other_i <- p
+  
+  while(hit_thetas[other_i] < 0 && nends[other_i] == FALSE && other_i >= 1) {
+    nends[other_i] <- TRUE
+    other_i <- other_i - 1
+  }
+  
+  return(nends)
+  
+}
+
 
 
 #Function which generates the observed data for a single theta vector
@@ -217,10 +275,12 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       
     }
     
-    idx = idx[hit_thetas >= 0] #Drop indices with negative thetas
-    hit_thetas <- hit_thetas[hit_thetas >= 0]
+    idx = idx[!neg_ends(hit_thetas)] #Drop indices with negative thetas
+    hit_thetas <- hit_thetas[!neg_ends(hit_thetas)]
     
-    if(length(idx) != 0){ # if the projection didn't only go through -1's
+    if(length(idx) != 0 && sum(hit_thetas < 0) == 0){ 
+      # if the projection didn't only go through -1's
+      # and if there isn't a -1 in the middle of the vector
       y <- data_gen(hit_thetas, d, l = l)
       add.list <- list(d = d, l = l, idx = idx, y = y)
       proj.list[[pl_idx]] <- add.list
@@ -280,10 +340,12 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       
     }
     
-    idx = idx[hit_thetas >= 0] #Drop indices with negative thetas
-    hit_thetas <- hit_thetas[hit_thetas >= 0]
+    idx = idx[!neg_ends(hit_thetas)] #Drop indices with negative thetas
+    hit_thetas <- hit_thetas[!neg_ends(hit_thetas)]
     
-    if(length(idx) != 0){ # if the projection didn't only go through -1's
+    if(length(idx) != 0 && sum(hit_thetas < 0) == 0){ 
+      # if the projection didn't only go through -1's
+      # and if there isn't a -1 in the middle of the vector
       y <- data_gen(hit_thetas, d, l = l)
       add.list <- list(d = d, l = l, idx = idx, y = y)
       proj.list[[pl_idx]] <- add.list
@@ -343,10 +405,12 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       
     }
     
-    idx = idx[hit_thetas >= 0] #Drop indices with negative thetas
-    hit_thetas <- hit_thetas[hit_thetas >= 0]
+    idx = idx[!neg_ends(hit_thetas)] #Drop indices with negative thetas
+    hit_thetas <- hit_thetas[!neg_ends(hit_thetas)]
     
-    if(length(idx) != 0){ # if the projection didn't only go through -1's
+    if(length(idx) != 0 && sum(hit_thetas < 0) == 0){ 
+      # if the projection didn't only go through -1's
+      # and if there isn't a -1 in the middle of the vector
       y <- data_gen(hit_thetas, d, l = l)
       add.list <- list(d = d, l = l, idx = idx, y = y)
       proj.list[[pl_idx]] <- add.list
@@ -406,10 +470,12 @@ angular_proj_list_gen <- function(THETA, d, ROW, COL, rise, run) {
       
     }
     
-    idx = idx[hit_thetas >= 0] #Drop indices with negative thetas
-    hit_thetas <- hit_thetas[hit_thetas >= 0]
+    idx = idx[!neg_ends(hit_thetas)] #Drop indices with negative thetas
+    hit_thetas <- hit_thetas[!neg_ends(hit_thetas)]
     
-    if(length(idx) != 0){ # if the projection didn't only go through -1's
+    if(length(idx) != 0 && sum(hit_thetas < 0) == 0){ 
+      # if the projection didn't only go through -1's
+      # and if there isn't a -1 in the middle of the vector
       y <- data_gen(hit_thetas, d, l = l)
       add.list <- list(d = d, l = l, idx = idx, y = y)
       proj.list[[pl_idx]] <- add.list
