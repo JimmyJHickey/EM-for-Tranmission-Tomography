@@ -64,7 +64,7 @@ while(y_zero(proj_list)){
                            reps = reps)        
 }
 
-length(proj_list) 
+length(proj_list) # 160
 
 # how many nonnegative numbers are in circle_theta?
 num_pixel <- sum(circle_theta >= 0)
@@ -115,7 +115,7 @@ proj_list <- data_gen_df(circle_theta, d = 1000000000, ROW = c(bounds, -bounds),
 
 y_zero(proj_list)
 
-length(proj_list) 
+length(proj_list) # 68
 
 # how many nonnegative numbers are in circle_theta?
 num_pixel <- sum(circle_theta >= 0)
@@ -166,7 +166,7 @@ proj_list <- data_gen_df(circle_theta, d = 1000000000, ROW = c(bounds, -bounds),
 
 y_zero(proj_list)
 
-length(proj_list) 
+length(proj_list) # 238
 
 # how many nonnegative numbers are in circle_theta?
 num_pixel <- sum(circle_theta >= 0)
@@ -195,11 +195,11 @@ plot_matrix(sq_diff_mat)
 # RMSE:
 
 sqrt(sum(sq_diff_mat) / num_pixel) # the MSE decreases
-# 0.1271847
+# 0.1555816
 
 
 svd(em_res_two_angles$theta_est - circle_theta)$d[1]
-# 0.9785938
+# 1.549698
 
 
 
