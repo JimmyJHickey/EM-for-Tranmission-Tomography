@@ -73,7 +73,7 @@ for(radius in radius.seq){
       while(y_zero(proj_list)){
         proj_list <- data_gen_df(face_theta, d = d, ROW = bounds, 
                                  COL = bounds,
-                                 reps = reps)        
+                                 rise_vec = rise.list[[b]], run_vec = run.list[[b]])        
       }
       
       # how many nonnegative numbers are in face_theta?

@@ -107,7 +107,8 @@ theta_init[which(true_theta >= 0)] <- runif(num_pixel, 0, 0.1)
 #Run Algorithm
 system.time(em_res <- em_alg(proj_list, theta_init, .0001))
 
-
+sum(em_res$theta_est^2) / num_pixel
+# 0.9765835
 
 
 
