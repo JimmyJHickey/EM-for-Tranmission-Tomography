@@ -203,7 +203,6 @@ plot_matrix(sq_diff_mat)
 sqrt(sum(sq_diff_mat) / num_pixel) # the MSE decreases
 # 0.1555816
 
-
 svd(em_res_two_angles$theta_est - circle_theta)$d[1]
 # 1.549698
 
@@ -239,6 +238,8 @@ em_res_three_angles <- em_alg(proj_list, circle_theta_init, .0001)
 
 save(em_res_three_angles, file = "em_results/em_res_three_angles.RData")
 
+em_res_three_angles$ctr # 110
+
 plot_matrix(em_res_three_angles$theta_est)
 
 abs_diff_mat <- abs(em_res_three_angles$theta_est - circle_theta)
@@ -254,10 +255,7 @@ plot_matrix(sq_diff_mat)
 sqrt(sum(sq_diff_mat) / num_pixel) 
 # 0.1183721
 
-
 svd(em_res_three_angles$theta_est - circle_theta)$d[1]
 # 1.164173
-
-
 
 
