@@ -35,13 +35,21 @@ data_gen <- function(theta, d, l){
 }
 
 
-#Function which generates the observed data for entire theta matrix and arbitrary projections
-data_gen_df <- function(THETA, d, ROW, COL, reps=1){
-  #THETA: input theta matrix used to compute probs.
-  #d: Poisson mean for initial Poisson generation
-  #ROW: rows which we project on (vector) Enter negative row number to get opposite direction
-  #COL: columns which we project on (vector) Enter negative col number to get opposite direction
-  #reps: number of times to run the function
+#' Function which generates the observed data for entire theta matrix and arbitrary projections
+#'
+#' @param THETA input theta matrix used to compute probs.
+#' @param d Poisson mean for initial Poisson generation
+#' @param ROW rows which we project on (vector) Enter negative row number to get opposite direction
+#' @param COL columns which we project on (vector) Enter negative col number to get opposite direction
+#' @param reps number of times to run the function
+#' @param rise_vec vector of numerator(s) of the slopes of the parallel projections (projections perpendicular to them will 
+#' also be generated)
+#' @param run_vec vector of denominator(s) of the slopes of the parallel projections (projections perpendicular to them will 
+#' also be generated)
+#' Note: One of rise or run is assumed to be one, and the other is assumed to be an integer >= one.
+#' @return estimated theta values
+#' @export
+data_gen_df <- function(THETA, d, ROW, COL, reps=1, rise_vec = 1, run_vec = 1){
   
   r = dim(THETA)[1] #Number of rows in THETA
   c = dim(THETA)[2] #Number of cols in THETA
@@ -101,10 +109,17 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1){
       
     }
     
-    ###########
-    # put diagonal projection function here
-    # remember to increase the pl_idx accordingly
-    ###########
+    #Check that rise_list and run_list have the same lengths
+    if(length(rise_vec) != length(run_vec)){
+      return(simpleError("rise_vec and run_vec have different numbers of elements"))
+    }
+    
+    for (i in 1:length(rise_vec)) {
+      # call a separate function for the angular projections
+      angular_proj_list <- angular_proj_list_gen(THETA, d, ROW, COL, rise = rise_vec[i], run = run_vec[i])
+      proj.list <- c(proj.list, angular_proj_list)
+      pl_idx + length(angular_proj_list)
+    }
     
   }
   
