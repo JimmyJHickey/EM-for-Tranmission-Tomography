@@ -186,6 +186,8 @@ em_res_two_angles <- em_alg(proj_list, circle_theta_init, .0001)
 
 save(em_res_two_angles, file = "em_results/em_res_two_angles.RData")
 
+em_res_two_angles$ctr # 110
+
 plot_matrix(em_res_two_angles$theta_est)
 
 abs_diff_mat <- abs(em_res_two_angles$theta_est - circle_theta)
