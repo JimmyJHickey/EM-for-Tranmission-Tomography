@@ -25,7 +25,8 @@ calc_matrix_index <- function(idx, num_row) {
     
   }
   
-  return(cbind(row_idx, col_idx))
+  # This order is more intuitive as Cartesian coordinates
+  return(cbind(col_idx, row_idx))
   
 } 
 
