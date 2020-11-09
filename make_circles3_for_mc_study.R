@@ -6,6 +6,7 @@ source("em_alg.R")
 
 
 
+
 # radius 3
 
 radius = 3
@@ -26,6 +27,7 @@ summary(as.vector(true_theta))
 save(true_theta, file = "true_theta/three_circles_rad3.RData")
 
 # EM algorithm, 10 seconds
+
 
 
 
@@ -50,6 +52,33 @@ summary(as.vector(true_theta))
 save(true_theta, file = "true_theta/three_circles_rad5.RData")
 
 # EM algorithm: 2 minutes
+
+
+
+
+# radius 10
+
+radius = 10
+
+set.seed(348)
+
+in_circ = in_circle(radius)
+plot_matrix(in_circ)
+
+# add two circles 
+circle_theta1  = circle_pattern(in_circ, 4, 16, 17)
+circle_theta2  = circle_pattern(circle_theta1, 3, 8, 11)
+true_theta  = circle_pattern(circle_theta2, 2, 18, 9)
+plot_matrix(true_theta)
+
+# check the maximum thetas
+summary(as.vector(true_theta))
+
+save(true_theta, file = "true_theta/three_circles_rad10.RData")
+
+# EM algorithm: 2 minutes
+
+
 
 
 
