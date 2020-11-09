@@ -15,6 +15,8 @@ mij <- function(proj, theta, j) {
   
   y <- proj$y
   
+  l <- proj$l
+  
   
   
   if (j %in% proj$idx) {
@@ -41,7 +43,7 @@ mij <- function(proj, theta, j) {
     
   }
   
-  return(d * (exp(-sum(theta_sub)) - exp(-sum(theta[idx]))) + y)
+  return(d * (exp(-sum(l * theta_sub)) - exp(-sum(l * theta[idx]))) + y)
   
 }
   
@@ -61,6 +63,8 @@ nij <- function(proj, theta, j) {
   idx <- proj$idx
   
   y <- proj$y
+  
+  l <- proj$l
   
   
   
@@ -82,7 +86,7 @@ nij <- function(proj, theta, j) {
   
   
   
-  return(d * (exp(-sum(theta_sub)) - exp(-sum(theta[idx]))) + y)
+  return(d * (exp(-sum(l * theta_sub)) - exp(-sum(l * theta[idx]))) + y)
   
 }
   
@@ -104,11 +108,13 @@ q_fun_j <- function(thetaj, proj_list, theta, j) {
   
   for (i in 1:num_proj) {
     
+    l <- proj_list[[i]]$l
+    
     m_exp <- mij(proj_list[[i]], theta, j)
     
     n_exp <- nij(proj_list[[i]], theta, j)
     
-    val <- val - n_exp + (m_exp - n_exp) / (exp(thetaj) - 1)
+    val <- val - n_exp * l + (m_exp - n_exp) * l / (exp(l * thetaj) - 1)
     
   }
   
