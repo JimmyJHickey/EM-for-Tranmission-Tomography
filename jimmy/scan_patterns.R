@@ -22,7 +22,7 @@ line_pattern = function(in_mat, row = TRUE, line_number = 0){
       # if in the circle and the correct row or column
       if((in_mat[x,y] > 0) &&
        ((row && y == line_number) || (!row && x == line_number)) ){
-        out_mat[x,y] = out_mat[x,y] + abs(rnorm(1, 1, 2.5))
+        out_mat[x,y] = out_mat[x,y] + abs(rnorm(1, 1, 1))
       } 
     }
   }

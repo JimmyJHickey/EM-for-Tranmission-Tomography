@@ -36,11 +36,6 @@ circle_theta2  = circle_pattern(circle_theta1, 2, 4, 4)
 plot_matrix(circle_theta2)
 
 
-radius = 3
 
-in_circ = in_circle(radius)
-plot_matrix(in_circ)
 
-one_theta = one_nonzero_pattern(in_circ, 6, 4)
-test = one_theta+one_theta+one_theta+one_theta+one_theta
-plot_matrix(test)
+
