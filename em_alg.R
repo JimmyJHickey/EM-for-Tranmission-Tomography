@@ -177,7 +177,7 @@ em_alg <- function(proj_list, theta, tol) {
       
       # what are the bounds of theta?
       # if I need more efficiency, calculate nij and mij outside of function
-      theta_est[j] <- uniroot(q_fun_j, interval = c(0.0000001, 10), proj_list, theta, j)$root  
+      theta_est[j] <- uniroot(q_fun_j, interval = c(0.0000001, 50), proj_list, theta, j)$root  
       
     }
     
