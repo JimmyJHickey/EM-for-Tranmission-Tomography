@@ -114,11 +114,13 @@ data_gen_df <- function(THETA, d, ROW, COL, reps=1, rise_vec = 1, run_vec = 1){
       return(simpleError("rise_vec and run_vec have different numbers of elements"))
     }
     
-    for (i in 1:length(rise_vec)) {
-      # call a separate function for the angular projections
-      angular_proj_list <- angular_proj_list_gen(THETA, d, ROW, COL, rise = rise_vec[i], run = run_vec[i])
-      proj.list <- c(proj.list, angular_proj_list)
-      pl_idx + length(angular_proj_list)
+    if (length(rise_vec) != 0) {
+      for (i in 1:length(rise_vec)) {
+        # call a separate function for the angular projections
+        angular_proj_list <- angular_proj_list_gen(THETA, d, ROW, COL, rise = rise_vec[i], run = run_vec[i])
+        proj.list <- c(proj.list, angular_proj_list)
+        pl_idx + length(angular_proj_list)
+      }
     }
     
   }
