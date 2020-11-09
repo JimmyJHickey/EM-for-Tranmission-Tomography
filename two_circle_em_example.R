@@ -80,6 +80,8 @@ em_res <- em_alg(proj_list, circle_theta_init, .0001)
 
 save(em_res, file = "em_results/em_res.RData")
 
+em_res$ctr # 87
+
 plot_matrix(em_res$theta_est)
 
 abs_diff_mat <- abs(em_res$theta_est - circle_theta)
@@ -130,6 +132,8 @@ circle_theta_init[which(circle_theta >= 0)] <- runif(num_pixel, 0, 0.1)
 em_res_no_angle <- em_alg(proj_list, circle_theta_init, .0001) 
 
 save(em_res_no_angle, file = "em_results/em_res_no_angle.RData")
+
+em_res_no_angle$ctr # 60
 
 plot_matrix(em_res_no_angle$theta_est)
 
