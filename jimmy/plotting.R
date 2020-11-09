@@ -10,6 +10,9 @@ plot_matrix = function(in_mat){
   # doesn't seem to care about those colors at all, but it works
   ggplot(df, aes(X, Y, fill= Z)) + 
     geom_tile()+
-    scale_color_manual(values = c("(-Inf,0]" = "black",
-                                    "(0,Inf]" = "grey50"))
-}
+    scale_fill_continuous(type = "viridis",
+                          limits = c(0,4), 
+                          breaks = c(0, 1, 2, 3, 4),
+                          guide_colourbar(nbin = 100),
+                          name = "theta")
+  }
