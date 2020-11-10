@@ -1,9 +1,9 @@
-load("em_results/boos/boos_results.RData")
+load("em_results/one_circle/one_circle_results.RData")
 
-results = boos_results
+results = one_circle_results
 
 angles_vec = c(0,1,3)
-rad_vec = c(10)
+rad_vec = c(3)
 
 for(rad in 1:length(rad_vec)){
   cat(paste(rad_vec[rad], " & ", sep = ""))
