@@ -150,6 +150,10 @@ y_zero <- function(proj_list) {
 # To bypass the theta = zero error
 max_q_fun_j <- function(interval, proj_list, theta, j) {
   
+  if (theta[j] == 0) {
+    return(0)
+  }
+  
   e <- try(
     # if I need more efficiency, calculate nij and mij outside of function
     theta_est <- uniroot(q_fun_j, interval, proj_list, theta, j, extendInt = "downX")$root, 
