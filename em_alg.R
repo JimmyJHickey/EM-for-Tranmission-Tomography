@@ -46,7 +46,7 @@ mij <- function(proj, theta, j) {
   return(d * (exp(-sum(l * theta_sub)) - exp(-sum(l * theta[idx]))) + y)
   
 }
-  
+
 
 
 #' Calculates nij for the E step
@@ -89,7 +89,7 @@ nij <- function(proj, theta, j) {
   return(d * (exp(-sum(l * theta_sub)) - exp(-sum(l * theta[idx]))) + y)
   
 }
-  
+
 
 
 #' Maximizes Q function for pixel j to estimate theta j
@@ -121,7 +121,7 @@ q_fun_j <- function(thetaj, proj_list, theta, j) {
   return(val)
   
 }
-  
+
 
 
 #' Detects whether there are any projections with y = 0 in proj_list
@@ -145,6 +145,29 @@ y_zero <- function(proj_list) {
   
 }
 
+
+
+# To bypass the theta = zero error
+max_q_fun_j <- function(interval, proj_list, theta, j) {
+  
+  if (theta[j] == 0) {
+    return(0)
+  }
+  
+  e <- try(
+    # if I need more efficiency, calculate nij and mij outside of function
+    theta_est <- uniroot(q_fun_j, interval, proj_list, theta, j, extendInt = "downX")$root, 
+    silent = TRUE
+  )
+  
+  
+  if (class(e) == "try-error") {
+    return(0)
+  } else {
+    return(theta_est)
+  }
+  
+}
 
 
 
@@ -175,10 +198,7 @@ em_alg <- function(proj_list, theta, tol) {
     
     for (j in nonneg_idx) {
       
-      # what are the bounds of theta?
-      # if I need more efficiency, calculate nij and mij outside of function
-      theta_est[j] <- uniroot(q_fun_j, interval = c(0.0000001, 10), proj_list, theta, j, 
-                              extendInt = "downX")$root  
+      theta_est[j] <- max_q_fun_j(interval = c(0.0000001, 10), proj_list, theta, j)
       
     }
     
@@ -199,4 +219,3 @@ em_alg <- function(proj_list, theta, tol) {
 
 
 
-  

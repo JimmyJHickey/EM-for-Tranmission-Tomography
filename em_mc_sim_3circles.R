@@ -17,8 +17,6 @@ source("em_alg.R")
 ##--------------------------------------------------------------
 ##--------------------------------------------------------------
 
-set.seed(27605) # set the seed 
-
 #Set the names for the array
 names.radius = c("rad3", "rad5", "rad10")
 names.angles = c("none", "deg45", "deg.all")
@@ -27,9 +25,13 @@ names.N = c("N1", "N2", "N3", "N4", "N5", "N6", "N7", "N8", "N9", "N10")
 
 names.list = list(names.radius, names.angles, names.met, names.N)
 
+# store the seeds
+seed_vec <- rep(NA, length(names.radius) * length(names.angles) * length(names.N))
+loop_idx <- 1
+
 #Array to hold all of our results
 #Rename to match your circle_theta name
-face_results <- array(NaN, dim =  c(3,3,3,10), dimnames = names.list)
+three_circles_results <- array(NaN, dim =  c(3,3,3,10), dimnames = names.list)
 
 #Output is a mulit-dimensional array
 #Dim 1: Radius. Length=3 for radius=c(3,5,10)
@@ -43,15 +45,15 @@ radius.seq = c(3,5,10)
 rise.list = list(c(), c(1), c(1,2,1))
 run.list = list(c(), c(1), c(1,1,2))
 a = 1
-d = 1000000000
+d = 1e9
 ##--------------------------------------------------------------
 ##--------------------------------------------------------------
 for(radius in radius.seq){
   #Keeps track of progress
   print(paste("radius=",radius))
-  #Generating the face_theta matrix. Different for each of us
+  #Generating the three_circles_theta matrix. Different for each of us
   load(paste("true_theta/three_circles_rad",radius,".RData",sep=""))
-  face_theta  = face
+  three_circles_theta  = true_theta
   
   # iterate over angles
   for(b in 1:3){
@@ -59,38 +61,40 @@ for(radius in radius.seq){
     for(N in 1:10){
       print(paste("N=",N))
       # generating observations
-      set.seed(as.numeric(ceiling(proc.time()[3])))
+      seed <- as.numeric(ceiling(proc.time()[3]))
+      seed_vec[loop_idx] <- seed
+      set.seed(seed)
       # vector of boundary rows/columns that aren't solely negative space
       # this code will not be right if there's more than one layer of -1's
-      bounds <- 1:nrow(face_theta)
+      bounds <- 1:nrow(three_circles_theta)
       
       #Generate data
-      proj_list <- data_gen_df(face_theta, d = d, ROW = bounds, 
+      proj_list <- data_gen_df(three_circles_theta, d = d, ROW = bounds, 
                                COL = bounds,
                                rise_vec = rise.list[[b]], run_vec = run.list[[b]])
       
       #Check for no 0 values. If so, regenerate data
       while(y_zero(proj_list)){
-        proj_list <- data_gen_df(face_theta, d = d, ROW = bounds, 
+        proj_list <- data_gen_df(three_circles_theta, d = d, ROW = bounds, 
                                  COL = bounds,
                                  rise_vec = rise.list[[b]], run_vec = run.list[[b]])        
       }
       
-      # how many nonnegative numbers are in face_theta?
-      num_pixel <- sum(face_theta >= 0)
+      # how many nonnegative numbers are in three_circles_theta?
+      num_pixel <- sum(three_circles_theta >= 0)
       
-      # copy the true face_theta's negative space, but change the nonnegative
+      # copy the true three_circles_theta's negative space, but change the nonnegative
       # values randomly
-      face_theta_init <- face_theta
+      three_circles_theta_init <- three_circles_theta
       
-      face_theta_init[which(face_theta >= 0)] <- runif(num_pixel, 0, 0.1)
+      three_circles_theta_init[which(three_circles_theta >= 0)] <- runif(num_pixel, 0, 0.1)
       
       #Run Algorithm
-      em_res <- em_alg(proj_list, face_theta_init, .0001) 
+      em_res <- em_alg(proj_list, three_circles_theta_init, .0001) 
       
-      save(em_res, file=paste("em_results/face/face_radius",radius,"_numangles", b,"_N", N ,".RData",sep=""))
+      save(em_res, file=paste("em_results/three_circles/three_circles_radius",radius,"_numangles", b,"_N", N ,".RData",sep=""))
       
-      abs_diff_mat <- abs(em_res$theta_est - face_theta)
+      abs_diff_mat <- abs(em_res$theta_est - three_circles_theta)
       
       sq_diff_mat <- abs_diff_mat^2
       
@@ -99,26 +103,32 @@ for(radius in radius.seq){
       #plot_matrix(sq_diff_mat)
       
       # RMSE:
-      face_results[a,b,1,N] <- sqrt(sum(sq_diff_mat) / num_pixel) 
+      three_circles_results[a,b,1,N] <- sqrt(sum(sq_diff_mat) / num_pixel) 
       #Spectral Norm
-      face_results[a,b,2,N] <-svd(em_res$theta_est - face_theta)$d[1]
+      three_circles_results[a,b,2,N] <-svd(em_res$theta_est - three_circles_theta)$d[1]
       #Number of iterations
-      face_results[a,b,3,N] <-em_res$ctr 
+      three_circles_results[a,b,3,N] <-em_res$ctr 
+      
+      loop_idx <- loop_idx + 1
+      
     }
-    b = b+1  
+ 
   }
   a = a+1
+  
+  save(three_circles_results, file = "three_circles_results.RData")
+  print(three_circles_results)
+  
 }
 
-save(face_results, file = "face_results.RData")
-face_results
-
-
-save(face_results, file = "face_results2.RData")
 
 
 
+save(three_circles_results, file = "three_circles_results.RData")
 
+
+
+save(seed_vec, file = "seed_vec_three_circles_results.RData")
 
 
 
