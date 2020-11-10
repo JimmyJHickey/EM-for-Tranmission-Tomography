@@ -77,7 +77,7 @@ summary(as.vector(true_theta))
 save(true_theta, file = "true_theta/three_circles_rad10.RData")
 
 # EM algorithm: 37.78225 minutes
-
+# 36.80142 minutes 2nd time through. So having extendInt = "downX" doesn't change things
 
 
 
@@ -107,8 +107,8 @@ theta_init[which(true_theta >= 0)] <- runif(num_pixel, 0, 0.1)
 #Run Algorithm
 system.time(em_res <- em_alg(proj_list, theta_init, .0001))
 
-sum(em_res$theta_est^2) / num_pixel
-# 0.9765835
+sqrt(sum((em_res$theta_est - true_theta)^2) / num_pixel)
+# 0.3535819
 
 
 
