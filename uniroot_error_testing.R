@@ -30,16 +30,23 @@ q_fun_j(0.001, proj_list, circle_theta, 38) # 12 and 24
 
 nonneg_idx <- which(circle_theta >= 0)
 
-for (j in nonneg_idx[!(nonneg_idx %in% c(38, 59, 60, 61, 62, 64, 65, 66, 67, 82, 83, 93, 94, 106))]) {
+zero_idx <- rep(NA, length(nonneg_idx))
+
+iter <- 1
+
+for (j in nonneg_idx) {
   
-  print(j)
+  zero_idx[iter] <- max_q_fun_j(interval = c(0.0000001, 10), proj_list, circle_theta, j) == 0
   
-  # what are the bounds of theta?
-  # if I need more efficiency, calculate nij and mij outside of function
-  uniroot(q_fun_j, interval = c(0.0000001, 10), proj_list, circle_theta, j, 
-                          extendInt = "downX")$root  
+  iter <- iter + 1
   
 }
+
+
+
+boundary_mat <- matrix(-1, nrow = 25, ncol = 25)
+
+boundary_mat[zero_idx] <- 0
 
 
 # projection 24
@@ -97,6 +104,31 @@ uniroot(q_fun_j, interval = c(0.0000001, 10), proj_list, circle_theta, 110,
         extendInt = "downX")$root  
 
 
+testiar <- function() {
+ 
+tryCatch(
+  # if I need more efficiency, calculate nij and mij outside of function
+  est <- uniroot(q_fun_j, interval = c(0.0000001, 10), proj_list, circle_theta, 110, 
+                       extendInt = "downX")$root, 
+  error=return(0)
+)
 
+  return(est)
+  
+}
+
+
+
+e <- try(est <- uniroot(q_fun_j, interval = c(0.0000001, 10), proj_list, circle_theta, 38, 
+                        extendInt = "downX")$root, silent = TRUE )
+if (class(e) == "try-error") {
+  0
+} else {
+  est
+}
+
+
+
+max_q_fun_j(interval = c(0.0000001, 10), proj_list, circle_theta, 110)
 
 
