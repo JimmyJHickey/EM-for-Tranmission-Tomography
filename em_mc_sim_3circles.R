@@ -128,7 +128,7 @@ save(three_circles_results, file = "three_circles_results.RData")
 
 
 
-
+save(seed_vec, file = "seed_vec_three_circles_results.RData")
 
 
 
