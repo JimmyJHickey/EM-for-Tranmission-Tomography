@@ -3,7 +3,59 @@ source("jimmy/pixel_circle.R")
 source("jimmy/plotting.R")
 source("jimmy/scan_patterns.R")
 
-# plotting figures
+
+
+# plotting figures for three circles, radius 5, 0 angles
+
+load(paste("true_theta/three_circles_rad",5,".RData",sep=""))
+
+load(paste("em_results/three_circles/three_circles_radius",5,"_numangles", 1,"_N", 8 ,".RData",sep=""))
+
+plot_matrix(true_theta)
+
+plot_matrix(em_res$theta_est)
+
+abs_diff_mat <- abs(em_res$theta_est - true_theta)
+
+plot_matrix(abs_diff_mat)
+
+
+
+# plotting figures for three circles, radius 5, 2 angles
+
+load(paste("true_theta/three_circles_rad",5,".RData",sep=""))
+
+load(paste("em_results/three_circles/three_circles_radius",5,"_numangles", 2,"_N", 10 ,".RData",sep=""))
+
+plot_matrix(true_theta)
+
+plot_matrix(em_res$theta_est)
+
+abs_diff_mat <- abs(em_res$theta_est - true_theta)
+
+plot_matrix(abs_diff_mat)
+
+
+
+# plotting figures for three circles, radius 5, 6 angles
+
+load(paste("true_theta/three_circles_rad",5,".RData",sep=""))
+
+load(paste("em_results/three_circles/three_circles_radius",5,"_numangles", 3,"_N", 7 ,".RData",sep=""))
+
+plot_matrix(true_theta)
+
+plot_matrix(em_res$theta_est)
+
+abs_diff_mat <- abs(em_res$theta_est - true_theta)
+
+plot_matrix(abs_diff_mat)
+
+
+
+##################
+
+# plotting figures for three circles, radius 10, 6 angles
 
 load(paste("true_theta/three_circles_rad",10,".RData",sep=""))
 
@@ -12,9 +64,6 @@ load(paste("em_results/three_circles/three_circles_radius",10,"_numangles", 3,"_
 plot_matrix(true_theta)
 
 plot_matrix(em_res$theta_est)
-
-
-
 
 abs_diff_mat <- abs(em_res$theta_est - true_theta)
 
