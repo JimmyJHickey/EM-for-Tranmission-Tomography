@@ -1,11 +1,24 @@
 
+source("jimmy/pixel_circle.R")
+source("jimmy/plotting.R")
+source("jimmy/scan_patterns.R")
+
 # plotting figures
 
 load(paste("true_theta/three_circles_rad",10,".RData",sep=""))
 
 load(paste("em_results/three_circles/three_circles_radius",10,"_numangles", 3,"_N", 7 ,".RData",sep=""))
 
+plot_matrix(true_theta)
 
+plot_matrix(em_res$theta_est)
+
+
+
+
+abs_diff_mat <- abs(em_res$theta_est - true_theta)
+
+plot_matrix(abs_diff_mat)
 
 
 
