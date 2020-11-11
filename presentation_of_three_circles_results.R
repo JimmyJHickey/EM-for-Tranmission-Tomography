@@ -33,10 +33,10 @@ load("three_circles_results.RData")
 #Dim 4: Monte Carlo N. length=N=10
 #Thus, we willl have an 3x5x3x10 array (=450 data points)
 
-names.radius = c("rad3", "rad5", "rad10")
 names.angles = c("none", "deg45", "deg.all")
+names.radius = c("rad3", "rad5", "rad10")
 
-names.list = list(names.radius, names.angles)
+names.list = list(names.angles, names.radius)
 
 
 
@@ -52,20 +52,26 @@ spec_sd_mat <- matrix(NA, nrow = 3, ncol = 3, dimnames = names.list)
 
 iter_sd_mat <- matrix(NA, nrow = 3, ncol = 3, dimnames = names.list)
 
-# iterate over radii
-for(a in 1:3){
-  
-  # iterate over angles
-  for(b in 1:3){
+# iterate over angles
+for(b in 1:3){
+
+  # iterate over radii
+  for(a in 1:3){
     
-    rmse_mean_mat[a, b] <- mean(three_circles_results[a, b, 1, ])
-    spec_mean_mat[a, b] <- mean(three_circles_results[a, b, 2, ])
-    iter_mean_mat[a, b] <- mean(three_circles_results[a, b, 3, ])
-    rmse_sd_mat[a, b] <- sd(three_circles_results[a, b, 1, ])
-    spec_sd_mat[a, b] <- sd(three_circles_results[a, b, 2, ])
-    iter_sd_mat[a, b] <- sd(three_circles_results[a, b, 3, ])
+    rmse_mean_mat[b, a] <- mean(three_circles_results[a, b, 1, ])
+    spec_mean_mat[b, a] <- mean(three_circles_results[a, b, 2, ])
+    iter_mean_mat[b, a] <- mean(three_circles_results[a, b, 3, ])
+    rmse_sd_mat[b, a] <- sd(three_circles_results[a, b, 1, ])
+    spec_sd_mat[b, a] <- sd(three_circles_results[a, b, 2, ])
+    iter_sd_mat[b, a] <- sd(three_circles_results[a, b, 3, ])
     
   }
   
 }
+
+round(rmse_mean_mat, digits = 2)
+
+round(rmse_sd_mat, digits = 2)
+
+
 
