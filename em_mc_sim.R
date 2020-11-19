@@ -9,9 +9,9 @@
 ##--------------------------------------------------------------
 
 #Read in Jimmy's Files
-source("jimmy/pixel_circle.R")
-source("jimmy/plotting.R")
-source("jimmy/scan_patterns.R")
+source("pixel_circle.R")
+source("plotting.R")
+source("scan_patterns.R")
 source("Simulate Data.R")
 source("em_alg.R")
 
