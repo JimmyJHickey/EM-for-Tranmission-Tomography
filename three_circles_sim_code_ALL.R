@@ -853,6 +853,8 @@ em_alg <- function(proj_list, theta, tol) {
 
 #################### Construct True Three Circles Theta Matrices ####################
 
+dir.create("true_theta")
+
 # radius 3
 
 radius = 3
@@ -958,9 +960,10 @@ save(true_theta, file = "true_theta/three_circles_rad10.RData")
 
 
 
-
-
 ###################### Run the Three Circles Simulation Study ######################
+
+dir.create("em_results")
+dir.create("em_results/three_circles")
 
 #Set the names for the array
 names.radius = c("rad3", "rad5", "rad10")
@@ -1065,6 +1068,56 @@ for(radius in radius.seq){
 save(three_circles_results, file = "three_circles_results.RData")
 
 save(seed_vec, file = "seed_vec_three_circles_results.RData")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #################### Plot Figures and Results for Three Circles ####################
