@@ -1,6 +1,6 @@
 #ST793 Final Project
 #EM algorithm for CT Data
-#Eric Yanchenko (Alvin Sheng and Jimmy Hickey) [Copyright]
+#Eric Yanchenko, Alvin Sheng, and Jimmy Hickey [Copyright]
 #November 4, 2020
 
 # calculates column-majorized vector index of a matrix index
